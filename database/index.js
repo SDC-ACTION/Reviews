@@ -12,3 +12,5 @@ db.once('open', () => {
 });
 
 module.exports.mongoose = mongoose;
+
+module.exports.reviewsTable = require('./methods/reviews.js');
