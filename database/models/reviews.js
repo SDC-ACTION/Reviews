@@ -9,4 +9,8 @@ const reviewSchema = new mongoose.Schema({
   created_at: { type: Date, default: Date.now },
 });
 
+reviewSchema.post('save', (doc) => {
+  console.log('asdfsafsdafsdafsdafdsafsda', doc);
+});
+
 module.exports = mongoose.model('Review', reviewSchema);
