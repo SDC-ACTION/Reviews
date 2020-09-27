@@ -5,6 +5,7 @@ const reviewsMethods = require('./reviews.js');
 describe('Reviews Table Methods Test', () => {
   beforeAll(async () => {
     const options = { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true };
+    // eslint-disable-next-line no-underscore-dangle
     await mongoose.connect(global.__MONGO_URI__, options, (err) => {
       if (err) {
         console.error(err);
