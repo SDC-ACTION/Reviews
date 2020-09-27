@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/reviews', {
+mongoose.connect('mongodb://localhost/reviews-service', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
