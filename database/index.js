@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/reviews-service', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
 });
 
 const db = mongoose.connection;
