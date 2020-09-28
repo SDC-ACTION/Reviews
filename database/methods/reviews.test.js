@@ -7,7 +7,12 @@ const reviewsMethods = require('./reviews.js');
 describe('Methods for reviews collection', () => {
   describe('addReview method tests', () => {
     beforeAll(async () => {
-      const options = { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true };
+      const options = {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+      };
       // eslint-disable-next-line no-underscore-dangle
       await mongoose.connect(global.__MONGO_URI__, options, (err) => {
         if (err) {
@@ -26,12 +31,12 @@ describe('Methods for reviews collection', () => {
       await CounterModel.deleteMany({});
     });
 
-    it('addReview should insert a valid doc into the reviews collection', async () => {
-      const count0 = await ReviewModel.count({});
+    it('method should insert a valid doc into the reviews collection', async () => {
+      const count0 = await ReviewModel.countDocuments({});
       await reviewsMethods.addReview({ review_rating: 4, username: 'Test1', product_id: 1 });
-      const count1 = await ReviewModel.count({});
+      const count1 = await ReviewModel.countDocuments({});
       await reviewsMethods.addReview({ review_rating: 5, username: 'Test2', product_id: 2 });
-      const count2 = await ReviewModel.count({});
+      const count2 = await ReviewModel.countDocuments({});
 
       const review1 = await ReviewModel.find({ username: 'Test1' });
       const review2 = await ReviewModel.find({ username: 'Test3' });
@@ -70,17 +75,6 @@ describe('Methods for reviews collection', () => {
       }
     });
 
-    it('method should not increment seq field in counters collection when adding a reivew fails', async () => {
-      await reviewsMethods.addReview({ review_rating: 4, username: 'Test1', product_id: 1 });
-
-      for (let i = 1; i <= 10; i += 1) {
-        await expect(reviewsMethods.addReview({ review_rating: 123, product_id: 123 }))
-          .rejects.toEqual(expect.any(Error));
-        const count = await CounterModel.find({ model_name: 'review' });
-        expect(count[0].seq).toBe(1);
-      }
-    });
-
     describe('method should not be able to insert into the reviews collection...', () => {
       it('...when there are missing required fields', async () => {
         // missing username
@@ -93,7 +87,7 @@ describe('Methods for reviews collection', () => {
         await expect(reviewsMethods.addReview({ review_rating: 123, username: '123' }))
           .rejects.toEqual(expect.any(Error));
 
-        const count = await ReviewModel.count({});
+        const count = await ReviewModel.countDocuments({});
         expect(count).toBe(0);
       });
 
@@ -105,9 +99,20 @@ describe('Methods for reviews collection', () => {
         await expect(reviewsMethods.addReview({ review_rating: 4, username: 'Test1', product_id: 'String' }))
           .rejects.toEqual(expect.any(Error));
 
-        const count = await ReviewModel.count({});
+        const count = await ReviewModel.countDocuments({});
         expect(count).toBe(0);
       });
+    });
+
+    it('method should not increment seq field in counters collection when adding a reivew fails', async () => {
+      await reviewsMethods.addReview({ review_rating: 4, username: 'Test1', product_id: 1 });
+
+      for (let i = 1; i <= 10; i += 1) {
+        await expect(reviewsMethods.addReview({ review_rating: 123, product_id: 123 }))
+          .rejects.toEqual(expect.any(Error));
+        const count = await CounterModel.find({ model_name: 'review' });
+        expect(count[0].seq).toBe(1);
+      }
     });
   });
 });

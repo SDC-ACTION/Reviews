@@ -3,7 +3,12 @@ const mongoose = require('mongoose');
 
 describe('Review Model', () => {
   beforeAll(async () => {
-    const options = { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true };
+    const options = {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+    };
     // eslint-disable-next-line no-underscore-dangle
     await mongoose.connect(global.__MONGO_URI__, options, (err) => {
       if (err) {
