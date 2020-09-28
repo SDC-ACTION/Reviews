@@ -1,9 +1,9 @@
 const CounterModel = require('../models/counter.js');
 
-module.exports.incrementReviewId = async () => {
+module.exports.incrementReviewSeq = async (value) => {
   const counter = await CounterModel.findOneAndUpdate(
     { model_name: 'review' },
-    { $inc: { seq: 1 } },
+    { $inc: { seq: value } },
     { upsert: true },
   );
   return counter;
