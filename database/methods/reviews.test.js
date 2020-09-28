@@ -46,7 +46,7 @@ describe('Methods for reviews collection', () => {
       expect(count2).toBe(2);
     });
 
-    it('addReview should create counter document if it does not exists', async () => {
+    it('method should create counter document if it does not exists when adding a review', async () => {
       const count0 = await CounterModel.find({});
       await reviewsMethods.addReview({ review_rating: 4, username: 'Test1', product_id: 1 });
       const count1 = await CounterModel.find({});
@@ -62,7 +62,7 @@ describe('Methods for reviews collection', () => {
       }
     });
 
-    it('addReview should increment seq field in the counters collection for each new document added to the review collection', async () => {
+    it('method should increment seq field in counters collection for each new document added to the review collection', async () => {
       for (let i = 1; i <= 10; i += 1) {
         await reviewsMethods.addReview({ review_rating: 4, username: 'Test1', product_id: 1 });
         const count1 = await CounterModel.find({ model_name: 'review' });
@@ -70,7 +70,18 @@ describe('Methods for reviews collection', () => {
       }
     });
 
-    describe('addReview should not be able to insert into the reviews collection...', () => {
+    it('method should not increment seq field in counters collection when adding a reivew fails', async () => {
+      await reviewsMethods.addReview({ review_rating: 4, username: 'Test1', product_id: 1 });
+
+      for (let i = 1; i <= 10; i += 1) {
+        await expect(reviewsMethods.addReview({ review_rating: 123, product_id: 123 }))
+          .rejects.toEqual(expect.any(Error));
+        const count = await CounterModel.find({ model_name: 'review' });
+        expect(count[0].seq).toBe(1);
+      }
+    });
+
+    describe('method should not be able to insert into the reviews collection...', () => {
       it('...when there are missing required fields', async () => {
         // missing username
         await expect(reviewsMethods.addReview({ review_rating: 123, product_id: 123 }))
