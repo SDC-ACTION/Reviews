@@ -35,16 +35,4 @@ describe('Counter Model', () => {
     count = await CounterModel.countDocuments({});
     expect(count).toBe(1);
   });
-
-  it('should not allow seq field go decrement below 0', async () => {
-    await CounterModel.create({ model_name: 'test' });
-    let doc = await CounterModel.find({ model_name: 'test' });
-    expect(doc[0].seq).toBe(0);
-
-    await CounterModel.findOneAndUpdate({ model_name: 'test' }, { $inc: { seq: -1 } });
-    await CounterModel.findOneAndUpdate({ model_name: 'test' }, { $inc: { seq: -1 } });
-    await CounterModel.findOneAndUpdate({ model_name: 'test' }, { $inc: { seq: -1 } });
-    doc = await CounterModel.find({ model_name: 'test' });
-    expect(doc[0].seq).toBe(0);
-  });
 });
