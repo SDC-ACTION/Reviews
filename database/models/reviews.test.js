@@ -9,7 +9,6 @@ describe('Review Model', () => {
       useUnifiedTopology: true,
       useFindAndModify: false,
     };
-    // eslint-disable-next-line no-underscore-dangle
     await mongoose.connect(global.__MONGO_URI__, options, (err) => {
       if (err) {
         console.error(err);

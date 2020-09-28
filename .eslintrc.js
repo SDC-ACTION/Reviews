@@ -22,5 +22,6 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'linebreak-style': ['error', 'windows'],
+    'no-underscore-dangle': ['error', { allow: ['__MONGO_URI__'] }],
   },
 };

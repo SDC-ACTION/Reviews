@@ -12,7 +12,6 @@ describe('Methods for reviews collection', () => {
       useUnifiedTopology: true,
       useFindAndModify: false,
     };
-    // eslint-disable-next-line no-underscore-dangle
     await mongoose.connect(global.__MONGO_URI__, options, (err) => {
       if (err) {
         console.error(err);
@@ -75,7 +74,7 @@ describe('Methods for reviews collection', () => {
       }
     });
 
-    it('method should not increment seq field in counters collection when adding a reivew fails', async () => {
+    it('method should not increment seq field in counters collection when adding a review fails', async () => {
       await reviewsMethods.addReview({ review_rating: 4, username: 'Test1', product_id: 1 });
 
       for (let i = 1; i <= 10; i += 1) {

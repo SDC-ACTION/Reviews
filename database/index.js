@@ -8,10 +8,8 @@ mongoose.connect('mongodb://localhost/reviews-service', {
 });
 
 const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-  console.log('Connected to MongoDB');
-});
+db.on('error', () => console.log('Connection Error'));
+db.once('open', () => console.log('Connected to MongoDB'));
 
 module.exports.mongoose = mongoose;
 
