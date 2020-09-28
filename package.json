@@ -6,7 +6,7 @@
   "license": "",
   "scripts": {
     "server-dev": "nodemon server/server.js",
-    "db-test": "jest -c=./database/jest-preset.js"
+    "db-test": "jest -c=./database/jest-preset.js --verbose --runInBand"
   },
   "dependencies": {
     "express": "^4.17.1",

@@ -3,31 +3,29 @@ const CounterModel = require('../models/counter.js');
 const counterMethods = require('./counter.js');
 
 describe('Counter method tests', () => {
+  beforeAll(async () => {
+    const options = {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+    };
+    // eslint-disable-next-line no-underscore-dangle
+    await mongoose.connect(global.__MONGO_URI__, options, (err) => {
+      if (err) {
+        console.error(err);
+        process.exit(1);
+      }
+    });
+
+    await CounterModel.create({ model_name: 'review' });
+  });
+
+  afterAll(async () => {
+    await mongoose.connection.close();
+  });
+
   describe('incrementReviewSeq method tests', () => {
-    beforeAll(async () => {
-      const options = {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false,
-      };
-      // eslint-disable-next-line no-underscore-dangle
-      await mongoose.connect(global.__MONGO_URI__, options, (err) => {
-        if (err) {
-          console.error(err);
-          process.exit(1);
-        }
-      });
-    });
-
-    afterAll(async () => {
-      await mongoose.connection.close();
-    });
-
-    beforeEach(async () => {
-      await CounterModel.create({ model_name: 'review' });
-    });
-
     afterEach(async () => {
       await CounterModel.deleteMany({});
     });
