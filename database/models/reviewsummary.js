@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const reviewSummarySchema = new mongoose.Schema({
   product_id: { type: Number, required: true, unique: true },
+  total_reviews: Number,
   average_rating: Number,
   stars_1: { type: Number, default: 0 },
   stars_2: { type: Number, default: 0 },

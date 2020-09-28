@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const mongoose = require('mongoose');
 const ReviewModel = require('../models/reviews');
-// const ReviewSummary = require('../models/reviewsummary');
+const ReviewSummary = require('../models/reviewsummary');
 const CounterModel = require('../models/counter.js');
 
 mongoose.connect('mongodb://localhost/reviews-service', {
@@ -33,12 +33,15 @@ for (let i = 1; i <= 100; i += 1) {
 
 const seed = async () => {
   await ReviewModel.deleteMany({});
-  // await ReviewSummary.deleteMany({});
+  await ReviewSummary.deleteMany({});
   await CounterModel.deleteMany({});
 
-  await CounterModel.create({ model_name: 'review', seq: 100 });
+  await CounterModel.create({ model_name: 'review', seq: 100 })
+    .then(() => console.log('Successfully Seeded Counters'))
+    .catch((err) => console.error('Error Seeding Counters: ', err.message));
 
-  const promises = count.map((i) => {
+  const summaryPromises = [];
+  const reviewPromises = count.map((i) => {
     const randMonth = rng(1, 13);
     const randDay = rng(1, 29);
     const randHr = rng(1, 25);
@@ -50,6 +53,17 @@ const seed = async () => {
     const randUser = usernames[rng(0, 15)];
     const randText = text[rng(0, 15)];
 
+    const starKey = {};
+    starKey.$inc = {};
+    starKey.$inc[`stars_${randRating}`] = 1;
+    starKey.$inc.total_reviews = 1;
+
+    summaryPromises.push(ReviewSummary.findOneAndUpdate(
+      { product_id: randProduct },
+      starKey,
+      { upsert: true },
+    ));
+
     return ReviewModel.create({
       review_id: i,
       product_id: randProduct,
@@ -60,9 +74,13 @@ const seed = async () => {
     });
   });
 
-  await Promise.all(promises)
-    .then(() => console.log('Seeding Database Successfull'))
-    .catch((err) => console.error('Error Seeding Database: ', err.message));
+  await Promise.all(summaryPromises)
+    .then(() => console.log('Successfully Seeded ReviewSummaries'))
+    .catch((err) => console.error('Error Seeding ReviewSummaries: ', err.message));
+
+  await Promise.all(reviewPromises)
+    .then(() => console.log('Successfully Seeded Reviews'))
+    .catch((err) => console.error('Error Seeding Reviews: ', err.message));
 
   process.exit(1);
 };
