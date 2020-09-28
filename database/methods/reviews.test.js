@@ -25,7 +25,7 @@ describe('Methods for reviews collection', () => {
     await mongoose.connection.close();
   });
 
-  describe('addReview method tests', () => {
+  describe('addReview method', () => {
     afterEach(async () => {
       await ReviewModel.deleteMany({});
       await CounterModel.deleteMany({});

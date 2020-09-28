@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const CounterModel = require('../models/counter.js');
 const counterMethods = require('./counter.js');
 
-describe('Counter method tests', () => {
+describe('Counter method', () => {
   beforeAll(async () => {
     const options = {
       useNewUrlParser: true,
