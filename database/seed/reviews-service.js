@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const mongoose = require('mongoose');
-const ReviewModel = require('../models/reviews');
-const ReviewSummary = require('../models/reviewsummary');
+const ReviewModel = require('../models/reviews.js');
+const ReviewSummaryModel = require('../models/reviewsummary.js');
 const CounterModel = require('../models/counter.js');
 
 mongoose.connect('mongodb://localhost/reviews-service', {
@@ -33,7 +33,7 @@ for (let i = 1; i <= 100; i += 1) {
 
 const seed = async () => {
   await ReviewModel.deleteMany({});
-  await ReviewSummary.deleteMany({});
+  await ReviewSummaryModel.deleteMany({});
   await CounterModel.deleteMany({});
 
   await CounterModel.create({ model_name: 'review', seq: 100 })
@@ -41,7 +41,8 @@ const seed = async () => {
     .catch((err) => console.error('Error Seeding Counters: ', err.message));
 
   const summaryPromises = [];
-  const reviewPromises = count.map((i) => {
+
+  const reviewPromises = count.map(async (i) => {
     const randMonth = rng(1, 13);
     const randDay = rng(1, 29);
     const randHr = rng(1, 25);
@@ -58,10 +59,10 @@ const seed = async () => {
     starKey.$inc[`stars_${randRating}`] = 1;
     starKey.$inc.total_reviews = 1;
 
-    summaryPromises.push(ReviewSummary.findOneAndUpdate(
+    summaryPromises.push(ReviewSummaryModel.findOneAndUpdate(
       { product_id: randProduct },
       starKey,
-      { upsert: true },
+      { upsert: true, setDefaultsOnInsert: true },
     ));
 
     return ReviewModel.create({
