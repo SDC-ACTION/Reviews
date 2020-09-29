@@ -43,7 +43,7 @@ const seed = async () => {
   await CounterModel.deleteMany({});
 
   const initReviewSummaries = reviewSummaryDocCount.map(
-    async (i) => ReviewSummaryModel.create({ product_id: i }),
+    (i) => ReviewSummaryModel.create({ product_id: i }),
   );
 
   await Promise.all(initReviewSummaries)
@@ -56,7 +56,7 @@ const seed = async () => {
 
   const summaryPromises = [];
 
-  const reviewPromises = reviewDocCount.map(async (i) => {
+  const reviewPromises = reviewDocCount.map((i) => {
     const randMonth = rng(1, 13);
     const randDay = rng(1, 29);
     const randHr = rng(1, 25);
@@ -96,8 +96,6 @@ const seed = async () => {
   await Promise.all(reviewPromises)
     .then(() => console.log('Successfully Seeded Reviews'))
     .catch((err) => console.error('Error Seeding Reviews: ', err.message));
-
-  process.exit(1);
 };
 
 seed();
