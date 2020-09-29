@@ -25,10 +25,16 @@ const text = [
   'test11', 'test12', 'test13', 'test14', 'test15',
 ];
 
-const count = [];
+const reviewDocCount = [];
+const reviewSummaryDocCount = [];
+const maxReviewCount = 300;
+
+for (let i = 1; i <= maxReviewCount; i += 1) {
+  reviewDocCount.push(i);
+}
 
 for (let i = 1; i <= 100; i += 1) {
-  count.push(i);
+  reviewSummaryDocCount.push(i);
 }
 
 const seed = async () => {
@@ -36,13 +42,21 @@ const seed = async () => {
   await ReviewSummaryModel.deleteMany({});
   await CounterModel.deleteMany({});
 
-  await CounterModel.create({ model_name: 'review', seq: 100 })
+  const initReviewSummaries = reviewSummaryDocCount.map(
+    async (i) => ReviewSummaryModel.create({ product_id: i }),
+  );
+
+  await Promise.all(initReviewSummaries)
+    .then(() => console.log('Successfully initialized ReviewSummaries'))
+    .catch((err) => console.error('Error initializing ReviewSummaries: ', err.message));
+
+  await CounterModel.create({ model_name: 'review', seq: maxReviewCount })
     .then(() => console.log('Successfully Seeded Counters'))
     .catch((err) => console.error('Error Seeding Counters: ', err.message));
 
   const summaryPromises = [];
 
-  const reviewPromises = count.map(async (i) => {
+  const reviewPromises = reviewDocCount.map(async (i) => {
     const randMonth = rng(1, 13);
     const randDay = rng(1, 29);
     const randHr = rng(1, 25);

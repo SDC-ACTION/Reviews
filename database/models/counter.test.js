@@ -9,7 +9,6 @@ describe('Counter Model', () => {
       useUnifiedTopology: true,
       useFindAndModify: false,
     };
-
     await mongoose.connect(global.__MONGO_URI__, options, (err) => {
       if (err) {
         console.error(err);

@@ -5,7 +5,7 @@
   "author": "",
   "license": "",
   "scripts": {
-    "seed-db": "node database/seed/reviews-service.js",
+    "db-seed": "node database/seed/seedRandomData.js",
     "server-dev": "nodemon server/server.js",
     "db-test": "jest -c=./database/jest-preset.js --verbose --runInBand"
   },
