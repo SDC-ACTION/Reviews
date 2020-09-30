@@ -9,7 +9,7 @@ module.exports.addReview = async (review) => {
     ReviewModel.create(review, async (err, data) => {
       if (err) {
         await counterMethods.decrementReviewSeq();
-        reject(err.message);
+        reject(err);
       }
       resolve(data);
     });

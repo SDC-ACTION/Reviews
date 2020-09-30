@@ -40,10 +40,10 @@ describe('Counter Model', () => {
 
   it('stars fields should default to 0 when no value is assigned to them', async () => {
     const reviewSummary = await ReviewSummaryModel.create({ product_id: 1 });
-    expect(reviewSummary.stars_1).toBe(0);
-    expect(reviewSummary.stars_2).toBe(0);
-    expect(reviewSummary.stars_3).toBe(0);
-    expect(reviewSummary.stars_4).toBe(0);
-    expect(reviewSummary.stars_5).toBe(0);
+    expect(reviewSummary.rating_1).toBe(0);
+    expect(reviewSummary.rating_2).toBe(0);
+    expect(reviewSummary.rating_3).toBe(0);
+    expect(reviewSummary.rating_4).toBe(0);
+    expect(reviewSummary.rating_5).toBe(0);
   });
 });
