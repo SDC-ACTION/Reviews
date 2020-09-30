@@ -27,11 +27,12 @@ describe('Counter Model', () => {
 
   it('should not allow duplicate model_names', async () => {
     await CounterModel.create({ model_name: 'test' });
-    let count = await CounterModel.countDocuments({});
-    expect(count).toBe(1);
-
     await expect(CounterModel.create({ model_name: 'test' })).rejects.toEqual(expect.any(Error));
-    count = await CounterModel.countDocuments({});
+    const count = await CounterModel.countDocuments({});
     expect(count).toBe(1);
+  });
+
+  it('should require a model_name', async () => {
+    await expect(CounterModel.create({ seq: 3 })).rejects.toEqual(expect.any(Error));
   });
 });
