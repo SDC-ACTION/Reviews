@@ -96,6 +96,8 @@ const seed = async () => {
   await Promise.all(reviewPromises)
     .then(() => console.log('Successfully Seeded Reviews'))
     .catch((err) => console.error('Error Seeding Reviews: ', err.message));
+
+  process.exit(0);
 };
 
 seed();
