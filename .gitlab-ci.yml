@@ -1,0 +1,16 @@
+image: node:12.18.3
+
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+    - node -v
+    - npm install
+
+test:
+  stage: test
+  script:
+    - npm run db-test
