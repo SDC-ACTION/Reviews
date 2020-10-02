@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const CounterModel = require('./counter.js');
+const CounterModel = require('../../../database/models/counter.js');
 
 describe('Counter Model', () => {
   beforeAll(async () => {

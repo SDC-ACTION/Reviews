@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const ReviewSummaryModel = require('./reviewsummary.js');
+const ReviewSummaryModel = require('../../../database/models/reviewsummary.js');
 
 describe('Counter Model', () => {
   beforeAll(async () => {

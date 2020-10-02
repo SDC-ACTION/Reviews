@@ -10,5 +10,3 @@ mongoose.connect('mongodb://localhost/reviews-service', {
 const db = mongoose.connection;
 db.on('error', () => console.error('Connection Error'));
 db.once('open', () => console.log('Connected to MongoDB'));
-
-module.exports.reviewsTable = require('./methods/reviews.js');
