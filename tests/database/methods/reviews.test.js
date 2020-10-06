@@ -4,7 +4,7 @@ const ReviewModel = require('../../../database/models/reviews.js');
 const CounterModel = require('../../../database/models/counter.js');
 const reviewsMethods = require('../../../database/methods/reviews.js');
 
-describe('Methods for reviews collection', () => {
+describe('Reviews Collection', () => {
   beforeAll(async () => {
     const options = {
       useNewUrlParser: true,
@@ -30,7 +30,7 @@ describe('Methods for reviews collection', () => {
   });
 
   describe('addReview method', () => {
-    it('method should insert a valid doc into the reviews collection', async () => {
+    it('should insert a valid doc into the reviews collection', async () => {
       await reviewsMethods.addReview({ review_rating: 4, username: 'Test1', product_id: 1 });
       await reviewsMethods.addReview({ review_rating: 5, username: 'Test2', product_id: 2 });
 
@@ -43,7 +43,7 @@ describe('Methods for reviews collection', () => {
       expect(count).toBe(2);
     });
 
-    it('method should create counter document if it does not exists when adding a review', async () => {
+    it('should create counter document if it does not exists when adding a review', async () => {
       await reviewsMethods.addReview({ review_rating: 4, username: 'Test1', product_id: 1 });
       const count1 = await CounterModel.find({});
       expect(count1.length).toBe(1);
@@ -56,7 +56,7 @@ describe('Methods for reviews collection', () => {
       }
     });
 
-    it('method should increment seq field in counters collection for each new document added to the review collection', async () => {
+    it('should increment seq field in counters collection for each new document added to the review collection', async () => {
       for (let i = 1; i <= 10; i += 1) {
         await reviewsMethods.addReview({ review_rating: 4, username: 'Test1', product_id: 1 });
         const count1 = await CounterModel.find({ model_name: 'review' });
@@ -107,7 +107,7 @@ describe('Methods for reviews collection', () => {
       expect(reviewsWithRating.length).toBe(1);
     });
 
-    it('when limit is not defined, return all records', async () => {
+    it('should return all records when limit is not defined', async () => {
       await ReviewModel.create({
         review_id: 1, review_rating: 4, username: 'Test1', product_id: 1,
       });
@@ -118,7 +118,7 @@ describe('Methods for reviews collection', () => {
       expect(reviews.length).toBe(2);
     });
 
-    it('limit defines the maximum number of records that will be returned', async () => {
+    it('should limit the amount of records returned when defined', async () => {
       await ReviewModel.create({
         review_id: 1, review_rating: 4, username: 'Test1', product_id: 1,
       });
@@ -129,7 +129,7 @@ describe('Methods for reviews collection', () => {
       expect(reviews.length).toBe(1);
     });
 
-    it('return an error when limit is not a number', async () => {
+    it('should return an error when limit is not a number', async () => {
       await ReviewModel.create({
         review_id: 1, review_rating: 4, username: 'Test1', product_id: 1,
       });
@@ -137,7 +137,7 @@ describe('Methods for reviews collection', () => {
         .rejects.toEqual(expect.any(Error));
     });
 
-    it('return an empty array if nothing is found', async () => {
+    it('should return an empty array if nothing is found', async () => {
       await ReviewModel.create({
         review_id: 1, review_rating: 4, username: 'Test1', product_id: 1,
       });

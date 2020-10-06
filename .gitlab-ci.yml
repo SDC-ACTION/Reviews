@@ -13,3 +13,7 @@ tests:
     - npm install
     - npm run test:db
     - npm run test:server
+  artifacts:
+    when: always
+    reports:
+        junit: artifacts/junit-*.xml

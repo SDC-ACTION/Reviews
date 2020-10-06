@@ -9,8 +9,8 @@
     "watch": "webpack --watch",
     "db-seed": "node database/seed/seedRandomData.js",
     "server-dev": "nodemon server/server.js",
-    "test:db": "jest -c=./tests/database/jest.db.config.js --runInBand",
-    "test:server": "jest -c=./tests/server/jest.server.config.js --runInBand"
+    "test:db": "jest -c=./tests/database/jest.db.config.js --ci --runInBand",
+    "test:server": "jest -c=./tests/server/jest.server.config.js --ci --runInBand"
   },
   "dependencies": {
     "express": "^4.17.1",
@@ -32,6 +32,7 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.0",
     "jest": "^26.4.2",
+    "jest-junit": "^12.0.0",
     "mongodb-memory-server": "^6.8.0",
     "supertest": "^5.0.0",
     "webpack": "^4.44.2",

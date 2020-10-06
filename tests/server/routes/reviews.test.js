@@ -27,7 +27,7 @@ describe('GET /reviews/{product_id} route', () => {
     await ReviewModel.deleteMany({});
   });
 
-  it('Should send status 200 when a review exists for a product', async (done) => {
+  it('should send status 200 when a review exists for a product', async (done) => {
     await ReviewModel.create({
       review_rating: 1, username: 'Test1', product_id: 2, review_id: 3,
     });
@@ -39,7 +39,7 @@ describe('GET /reviews/{product_id} route', () => {
     done();
   });
 
-  it('Should send status 200 when a review exists & parameters are valid', async (done) => {
+  it('should send status 200 when a review exists & parameters are valid', async (done) => {
     await ReviewModel.create({
       review_rating: 1, username: 'Test1', product_id: 2, review_id: 3,
     });
@@ -51,7 +51,7 @@ describe('GET /reviews/{product_id} route', () => {
     done();
   });
 
-  it('Send status 404 when reviews are not found w/ valid parameters', async (done) => {
+  it('should send status 404 when reviews are not found w/ valid parameters', async (done) => {
     await ReviewModel.create({
       review_rating: 1, username: 'Test1', product_id: 1, review_id: 1,
     });
@@ -64,8 +64,8 @@ describe('GET /reviews/{product_id} route', () => {
     done();
   });
 
-  describe('Send status 400 on bad parameters', () => {
-    it('product_id is not a number', async (done) => {
+  describe('should send status 400 on bad parameters', () => {
+    it('when product_id is not a number', async (done) => {
       const response = await request(app).get('/reviews/a')
         .expect('Content-Type', /text\/html/)
         .expect(400);
@@ -73,7 +73,7 @@ describe('GET /reviews/{product_id} route', () => {
       done();
     });
 
-    it('limit or review_rating is not a number', async (done) => {
+    it('when limit or review_rating is not a number', async (done) => {
       await ReviewModel.create({
         review_rating: 1, username: 'Test1', product_id: 1, review_id: 1,
       });
@@ -90,7 +90,7 @@ describe('GET /reviews/{product_id} route', () => {
       done();
     });
 
-    it('limit is a negative number', async (done) => {
+    it('when limit is a negative number', async (done) => {
       const response = await request(app).get('/reviews/1?limit=-1')
         .expect('Content-Type', /text\/html/)
         .expect(400);
@@ -99,7 +99,7 @@ describe('GET /reviews/{product_id} route', () => {
     });
   });
 
-  it('Send status 500 when error occurs even w/ valid parameters', async (done) => {
+  it('should send status 500 when error occurs even w/ valid parameters', async (done) => {
     await ReviewModel.create({
       review_rating: 1, username: 'Test1', product_id: 9999, review_id: 1,
     });

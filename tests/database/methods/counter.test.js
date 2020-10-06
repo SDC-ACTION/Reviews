@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const CounterModel = require('../../../database/models/counter.js');
 const counterMethods = require('../../../database/methods/counter.js');
 
-describe('Counter method', () => {
+describe('Counters Collection', () => {
   beforeAll(async () => {
     const options = {
       useNewUrlParser: true,
@@ -30,7 +30,7 @@ describe('Counter method', () => {
       await CounterModel.deleteMany({});
     });
 
-    it('method should increment sequence field by 1', async () => {
+    it('should increment sequence field by 1', async () => {
       await counterMethods.incrementReviewSeq();
       await counterMethods.incrementReviewSeq();
       let counter = await CounterModel.find({ model_name: 'review' });
