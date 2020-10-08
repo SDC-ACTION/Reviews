@@ -23,6 +23,10 @@ coverage
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
 dist/
+public/bundle.js
 
 # Jest
 globalConfig.json
+
+# JUnit
+artifacts/
