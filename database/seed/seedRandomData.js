@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const mongoose = require('mongoose');
 const ReviewModel = require('../models/reviews.js');
 const ReviewSummaryModel = require('../models/reviewsummary.js');

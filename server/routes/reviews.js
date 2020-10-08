@@ -14,7 +14,6 @@ const queryReviewRating = (req, res, next) => {
   next();
 };
 
-// eslint-disable-next-line camelcase
 router.param('product_id', (req, res, next, product_id) => {
   if (Number.isNaN(Number(product_id))) {
     res.status(400).send('Bad Request.');

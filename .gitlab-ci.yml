@@ -1,14 +1,14 @@
 image: node:12.18.3
 
 stages:
-  - tests
+  - test
 
 cache:
   paths:
     - node_modules/
 
 tests:
-  stage: tests
+  stage: test
   script:
     - npm install
     - npm run test:db

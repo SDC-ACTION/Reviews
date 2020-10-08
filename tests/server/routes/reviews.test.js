@@ -3,7 +3,7 @@ const request = require('supertest');
 const app = require('../app.mock.js');
 const ReviewModel = require('../../../database/models/reviews.js');
 
-describe('GET /reviews/{product_id} route', () => {
+describe('GET /api/reviews/{product_id} route', () => {
   beforeAll(async () => {
     const options = {
       useNewUrlParser: true,
@@ -31,7 +31,7 @@ describe('GET /reviews/{product_id} route', () => {
     await ReviewModel.create({
       review_rating: 1, username: 'Test1', product_id: 2, review_id: 3,
     });
-    const response = await request(app).get('/reviews/2')
+    const response = await request(app).get('/api/reviews/2')
       .expect('Content-Type', /application\/json/)
       .expect(200);
     expect(response.body.length).toBe(1);
@@ -43,7 +43,7 @@ describe('GET /reviews/{product_id} route', () => {
     await ReviewModel.create({
       review_rating: 1, username: 'Test1', product_id: 2, review_id: 3,
     });
-    const response = await request(app).get('/reviews/2?limit=1&review_rating=1')
+    const response = await request(app).get('/api/reviews/2?limit=1&review_rating=1')
       .expect('Content-Type', /application\/json/)
       .expect(200);
     expect(response.body.length).toBe(1);
@@ -55,9 +55,9 @@ describe('GET /reviews/{product_id} route', () => {
     await ReviewModel.create({
       review_rating: 1, username: 'Test1', product_id: 1, review_id: 1,
     });
-    await request(app).get('/reviews/1?review_rating=2')
+    await request(app).get('/api/reviews/1?review_rating=2')
       .expect(404);
-    const response = await request(app).get('/reviews/2')
+    const response = await request(app).get('/api/reviews/2')
       .expect('Content-Type', /text\/html/)
       .expect(404);
     expect(response.text).toBe('Reviews Not Found.');
@@ -66,7 +66,7 @@ describe('GET /reviews/{product_id} route', () => {
 
   describe('should send status 400 on bad parameters', () => {
     it('when product_id is not a number', async (done) => {
-      const response = await request(app).get('/reviews/a')
+      const response = await request(app).get('/api/reviews/a')
         .expect('Content-Type', /text\/html/)
         .expect(400);
       expect(response.text).toBe('Bad Request.');
@@ -78,12 +78,12 @@ describe('GET /reviews/{product_id} route', () => {
         review_rating: 1, username: 'Test1', product_id: 1, review_id: 1,
       });
       // limit is a letter
-      const response1 = await request(app).get('/reviews/1?limit=a')
+      const response1 = await request(app).get('/api/reviews/1?limit=a')
         .expect('Content-Type', /text\/html/)
         .expect(400);
       expect(response1.text).toBe('Bad Request.');
       // review_rating is a letter
-      const response2 = await request(app).get('/reviews/1?review_rating=a')
+      const response2 = await request(app).get('/api/reviews/1?review_rating=a')
         .expect('Content-Type', /text\/html/)
         .expect(400);
       expect(response2.text).toBe('Bad Request.');
@@ -91,7 +91,7 @@ describe('GET /reviews/{product_id} route', () => {
     });
 
     it('when limit is a negative number', async (done) => {
-      const response = await request(app).get('/reviews/1?limit=-1')
+      const response = await request(app).get('/api/reviews/1?limit=-1')
         .expect('Content-Type', /text\/html/)
         .expect(400);
       expect(response.text).toBe('Bad Request.');
@@ -103,7 +103,7 @@ describe('GET /reviews/{product_id} route', () => {
     await ReviewModel.create({
       review_rating: 1, username: 'Test1', product_id: 9999, review_id: 1,
     });
-    const response = await request(app).get('/reviews/9999')
+    const response = await request(app).get('/api/reviews/9999')
       .expect('Content-Type', /text\/html/)
       .expect(500);
     expect(response.text).toBe('Internal Server Error.');
