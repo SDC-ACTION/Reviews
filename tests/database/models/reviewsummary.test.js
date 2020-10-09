@@ -21,7 +21,7 @@ describe('Review Summary Model', () => {
     await mongoose.connection.close();
   });
 
-  afterEach(async () => {
+  beforeEach(async () => {
     await ReviewSummaryModel.deleteMany({});
   });
 
@@ -32,8 +32,14 @@ describe('Review Summary Model', () => {
     expect(count).toBe(1);
   });
 
+  it('should not allow product_id to be a string', async () => {
+    await expect(ReviewSummaryModel.create({ product_id: 'a' })).rejects.toEqual(expect.any(Error));
+    const count = await ReviewSummaryModel.countDocuments({});
+    expect(count).toBe(0);
+  });
+
   it('should require a product_id field', async () => {
-    await expect(ReviewSummaryModel.create({ stars_1: 1 })).rejects.toEqual(expect.any(Error));
+    await expect(ReviewSummaryModel.create({ rating_1: 1 })).rejects.toEqual(expect.any(Error));
     const count = await ReviewSummaryModel.countDocuments({});
     expect(count).toBe(0);
   });
