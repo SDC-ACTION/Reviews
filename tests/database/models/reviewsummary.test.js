@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const ReviewSummaryModel = require('./reviewsummary.js');
+const ReviewSummaryModel = require('../../../database/models/reviewsummary.js');
 
-describe('Counter Model', () => {
+describe('Review Summary Model', () => {
   beforeAll(async () => {
     const options = {
       useNewUrlParser: true,
@@ -32,13 +32,13 @@ describe('Counter Model', () => {
     expect(count).toBe(1);
   });
 
-  it('product_id should be a required field', async () => {
+  it('should require a product_id field', async () => {
     await expect(ReviewSummaryModel.create({ stars_1: 1 })).rejects.toEqual(expect.any(Error));
     const count = await ReviewSummaryModel.countDocuments({});
     expect(count).toBe(0);
   });
 
-  it('stars fields should default to 0 when no value is assigned to them', async () => {
+  it('rating fields should default to 0 when no value is assigned to them', async () => {
     const reviewSummary = await ReviewSummaryModel.create({ product_id: 1 });
     expect(reviewSummary.rating_1).toBe(0);
     expect(reviewSummary.rating_2).toBe(0);

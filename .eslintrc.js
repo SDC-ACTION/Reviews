@@ -1,3 +1,8 @@
+const allowCamelCase = [
+  'product_*', 'review_*', 'rating_*', 'model_name', 'created_at',
+  'total_reviews',
+];
+
 module.exports = {
   env: {
     browser: true,
@@ -20,6 +25,9 @@ module.exports = {
     'jest',
   ],
   rules: {
+    camelcase: [
+      'error', { allow: allowCamelCase },
+    ],
     'no-console': 'off',
     'linebreak-style': ['error', 'windows'],
     'no-underscore-dangle': ['error', { allow: ['__MONGO_URI__'] }],

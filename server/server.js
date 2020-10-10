@@ -1,13 +1,7 @@
-const express = require('express');
-const db = require('../database');
-
-const app = express();
+require('../database');
+const app = require('./app.js');
 
 const PORT = 3001;
-
-app.get('/', (req, res) => {
-  res.end();
-});
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);

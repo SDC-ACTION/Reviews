@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const mongoose = require('mongoose');
 const ReviewModel = require('../models/reviews.js');
 const ReviewSummaryModel = require('../models/reviewsummary.js');
@@ -70,7 +69,7 @@ const seed = async () => {
 
     const starKey = {};
     starKey.$inc = {};
-    starKey.$inc[`stars_${randRating}`] = 1;
+    starKey.$inc[`rating_${randRating}`] = 1;
     starKey.$inc.total_reviews = 1;
 
     summaryPromises.push(ReviewSummaryModel.findOneAndUpdate(
