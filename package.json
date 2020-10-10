@@ -6,9 +6,10 @@
   "license": "",
   "scripts": {
     "build": "webpack",
-    "watch": "webpack --watch",
+    "watch": "webpack --mode=development --watch",
     "db:seed": "node database/seed/seedRandomData.js",
     "server:dev": "nodemon server/server.js",
+    "test:client": "jest -c=./tests/client/jest.client.config.js",
     "test:db": "jest -c=./tests/database/jest.db.config.js --ci --runInBand",
     "test:server": "jest -c=./tests/server/jest.server.config.js --ci --runInBand"
   },
@@ -26,6 +27,8 @@
     "@babel/preset-react": "^7.10.4",
     "@shelf/jest-mongodb": "^1.2.3",
     "babel-loader": "^8.1.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.5",
     "eslint": "^7.2.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.21.2",
