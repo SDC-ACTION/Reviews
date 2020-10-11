@@ -18,6 +18,10 @@ const usernames = [
   '52Cards', 'HelloKitty5', 'Driller40', 'Muppets', 'Slinky',
 ];
 
+const heading = [
+  'I hate this product', 'I love this product', 'idk', 'It\'s okay', 'Meh',
+];
+
 const text = [
   'test1', 'test2', 'test3', 'test4', 'test5',
   'test6', 'test7', 'test8', 'test9', 'test10',
@@ -65,6 +69,7 @@ const seed = async () => {
     const randRating = rng(1, 6);
     const randProduct = rng(1, 101);
     const randUser = usernames[rng(0, 15)];
+    const randHeading = heading[rng(0, 5)];
     const randText = text[rng(0, 15)];
 
     const starKey = {};
@@ -82,6 +87,7 @@ const seed = async () => {
       review_id: i,
       product_id: randProduct,
       username: randUser,
+      review_heading: randHeading,
       review_text: randText,
       review_rating: randRating,
       created_at: new Date(2020, randMonth, randDay, randHr, randMin, randSec).toISOString(),
