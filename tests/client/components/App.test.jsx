@@ -7,20 +7,21 @@ import ReviewSummary from '../../../client/components/ReviewSummary/ReviewSummar
 import SearchReviews from '../../../client/components/SearchReviews/SearchReviews';
 
 describe('App Component', () => {
-  it('should render a single node that has \'app\' as the classname', () => {
-    const wrapper = shallow(<App />);
+  const matchProp = { params: { id: 1 } };
+  it('should render a single node that has \'app-container\' as the classname', () => {
+    const wrapper = shallow(<App match={matchProp} />);
     expect(wrapper.is('.app-container')).toBe(true);
   });
 
   it('should have 3 children in the \'app\' div', () => {
-    const wrapper = shallow(<App />);
+    const wrapper = shallow(<App match={matchProp} />);
     expect(wrapper.find('.app-container').children().length).toBe(3);
   });
 
-  it('should render the Reviews, ReviewSummary, & SearchReviews components', () => {
-    const wrapper = shallow(<App />);
-    expect(wrapper.contains(<Reviews />)).toBe(true);
-    expect(wrapper.contains(<ReviewSummary />)).toBe(true);
-    expect(wrapper.contains(<SearchReviews />)).toBe(true);
+  it('should contain the Reviews, ReviewSummary, & SearchReviews components', () => {
+    const wrapper = shallow(<App match={matchProp} />);
+    expect(wrapper.find(Reviews)).toHaveLength(1);
+    expect(wrapper.find(ReviewSummary)).toHaveLength(1);
+    expect(wrapper.find(SearchReviews)).toHaveLength(1);
   });
 });

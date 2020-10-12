@@ -3,11 +3,11 @@ import ReviewSummary from './ReviewSummary/ReviewSummary';
 import SearchReviews from './SearchReviews/SearchReviews';
 import Reviews from './Reviews/Reviews';
 
-const App = () => (
+const App = ({ match }) => (
   <div className="app-container">
-    <ReviewSummary />
-    <SearchReviews />
-    <Reviews />
+    <ReviewSummary product_id={Number(match.params.id)} />
+    <SearchReviews product_id={Number(match.params.id)} />
+    <Reviews product_id={Number(match.params.id)} />
   </div>
 );
 
