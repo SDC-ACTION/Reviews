@@ -1,18 +1,38 @@
-image: node:12.18.3
+image: node:latest
 
 stages:
+  - build
   - test
 
 cache:
   paths:
     - node_modules/
 
-tests:
-  stage: test
+build:
+  stage: build
   script:
     - npm install
+
+test_db:
+  stage: test
+  script:
     - npm run test:db
+  artifacts:
+    reports:
+        junit: artifacts/junit-*.xml
+
+test_api:
+  stage: test
+  script:
     - npm run test:server
+  artifacts:
+    reports:
+        junit: artifacts/junit-*.xml
+
+test_client:
+  stage: test
+  script:
+    - npm run test:client
   artifacts:
     reports:
         junit: artifacts/junit-*.xml

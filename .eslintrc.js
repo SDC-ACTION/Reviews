@@ -28,6 +28,7 @@ module.exports = {
     camelcase: [
       'error', { allow: allowCamelCase },
     ],
+    'react/prop-types': 0,
     'no-console': 'off',
     'linebreak-style': ['error', 'windows'],
     'no-underscore-dangle': ['error', { allow: ['__MONGO_URI__'] }],
