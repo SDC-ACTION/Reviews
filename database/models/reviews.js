@@ -4,6 +4,7 @@ const reviewSchema = new mongoose.Schema({
   review_id: { type: Number, required: true, unique: true },
   product_id: { type: Number, required: true },
   username: { type: String, required: true },
+  review_heading: String,
   review_text: String,
   review_rating: {
     type: Number,
