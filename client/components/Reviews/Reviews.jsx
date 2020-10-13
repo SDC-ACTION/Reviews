@@ -5,7 +5,7 @@ import Text from './Text';
 import Footer from './Footer';
 
 const Reviews = ({ product_id }) => {
-  const apiData = useAPI(`http://localhost:3001/api/reviews/${product_id}`);
+  const apiData = useAPI(`http://localhost:3000/api/reviews/${product_id}`);
 
   if (apiData) {
     const { review_heading, review_text, username } = apiData[0];
