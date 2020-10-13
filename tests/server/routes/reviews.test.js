@@ -1,6 +1,9 @@
+jest.mock('../../../database/methods/reviews.js');
+jest.mock('../../../database/methods/reviewsummary.js');
+
 const mongoose = require('mongoose');
 const request = require('supertest');
-const app = require('../app.mock.js');
+const app = require('../../../server/app.js');
 const ReviewModel = require('../../../database/models/reviews.js');
 const ReviewSummaryModel = require('../../../database/models/reviewsummary.js');
 
@@ -109,9 +112,9 @@ describe('GET /api/reviews...', () => {
 
     it('should send status 500 when error occurs even w/ valid parameters', async (done) => {
       await ReviewModel.create({
-        review_rating: 1, username: 'Test1', product_id: 9999, review_id: 1,
+        review_rating: 1, username: 'Test1', product_id: 9999999999, review_id: 1,
       });
-      const response = await request(app).get('/api/reviews/9999')
+      const response = await request(app).get('/api/reviews/9999999999')
         .expect('Content-Type', /text\/html/)
         .expect(500);
       expect(response.text).toBe('Internal Server Error.');
@@ -155,8 +158,8 @@ describe('GET /api/reviews...', () => {
     });
 
     it('should send status 500 when error occurs even w/ valid parameters', async (done) => {
-      await ReviewSummaryModel.create({ product_id: 9999 });
-      const response = await request(app).get('/api/reviews/9999/summary')
+      await ReviewSummaryModel.create({ product_id: 9999999999 });
+      const response = await request(app).get('/api/reviews/9999999999/summary')
         .expect('Content-Type', /text\/html/)
         .expect(500);
       expect(response.text).toBe('Internal Server Error.');
