@@ -1,7 +1,12 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const StyledReviewHeading = styled.p`
+  margin: 0px;
+`;
 
 const Heading = ({ review_heading }) => (
-  <p className="review-heading">{review_heading}</p>
+  <StyledReviewHeading>{review_heading}</StyledReviewHeading>
 );
 
 export default Heading;
