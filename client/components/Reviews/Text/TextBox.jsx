@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import ShortText from './ShortText';
-import LongText from './LongText';
+import Text from './Text';
 
 const StyledTextWrapper = styled.div`
   line-height: 20px;
@@ -21,7 +20,7 @@ const TextBox = ({ review_text }) => {
     const splitIndex = review_text.lastIndexOf(' ', 800);
 
     shortText = (
-      <ShortText
+      <Text
         text={`${review_text.substring(0, splitIndex)} ...`}
         display={display.shortDisplay}
         setDisplay={setDisplay}
@@ -29,13 +28,13 @@ const TextBox = ({ review_text }) => {
     );
 
     longText = (
-      <LongText
+      <Text
         text={`${review_text}`}
         display={display.longDisplay}
         setDisplay={setDisplay}
       />
     );
-  } else shortText = <ShortText text={review_text} />;
+  } else shortText = <Text text={review_text} />;
 
   return (
     <StyledTextWrapper>
