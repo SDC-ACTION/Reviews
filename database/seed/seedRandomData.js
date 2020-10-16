@@ -23,9 +23,11 @@ const heading = [
 ];
 
 const text = [
-  'test1', 'test2', 'test3', 'test4', 'test5',
-  'test6', 'test7', 'test8', 'test9', 'test10',
-  'test11', 'test12', 'test13', 'test14', 'test15',
+  `LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText
+
+  LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText LongText`,
+
+  'Short',
 ];
 
 const reviewDocCount = [];
@@ -70,7 +72,7 @@ const seed = async () => {
     const randProduct = rng(1, 101);
     const randUser = usernames[rng(0, 15)];
     const randHeading = heading[rng(0, 5)];
-    const randText = text[rng(0, 15)];
+    const randText = text[rng(0, 2)];
 
     const starKey = {};
     starKey.$inc = {};

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import useAPI from '../../hooks/useAPI';
 import Heading from './Heading';
 import PostDate from './PostDate';
-import Text from './Text';
+import Text from './Text/Text';
 import Footer from './Footer';
 
 const StyledReviewWrapper = styled.div`

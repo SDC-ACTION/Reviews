@@ -7,8 +7,17 @@ const StyledPostDate = styled.p`
   margin: 12px 0px;
 `;
 
-const PostDate = ({ created_at }) => (
-  <StyledPostDate>{created_at}</StyledPostDate>
-);
+const PostDate = ({ created_at }) => {
+  const date = new Date(created_at);
+  const dateOptions = {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  };
+
+  return (
+    <StyledPostDate>{date.toLocaleDateString('en-US', dateOptions)}</StyledPostDate>
+  );
+};
 
 export default PostDate;
