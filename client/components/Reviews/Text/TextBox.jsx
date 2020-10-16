@@ -4,11 +4,15 @@ import ShortText from './ShortText';
 import LongText from './LongText';
 
 const StyledTextWrapper = styled.div`
+  line-height: 20px;
   margin: 0px;
 `;
 
-const Text = ({ review_text }) => {
-  const [enableDisplay, setEnableDisplay] = useState(null);
+const TextBox = ({ review_text }) => {
+  const [display, setDisplay] = useState({
+    shortDisplay: null,
+    longDisplay: 'none',
+  });
 
   let shortText = null;
   let longText = null;
@@ -18,17 +22,17 @@ const Text = ({ review_text }) => {
 
     shortText = (
       <ShortText
-        text={review_text.substring(splitIndex)}
-        display={(enableDisplay === null) ? enableDisplay : 'none'}
-        setEnableDisplay={setEnableDisplay}
+        text={`${review_text.substring(0, splitIndex)} ...`}
+        display={display.shortDisplay}
+        setDisplay={setDisplay}
       />
     );
 
     longText = (
       <LongText
-        text={review_text}
-        display={(enableDisplay === null) ? 'none' : enableDisplay}
-        setEnableDisplay={setEnableDisplay}
+        text={`${review_text}`}
+        display={display.longDisplay}
+        setDisplay={setDisplay}
       />
     );
   } else shortText = <ShortText text={review_text} />;
@@ -41,4 +45,4 @@ const Text = ({ review_text }) => {
   );
 };
 
-export default Text;
+export default TextBox;

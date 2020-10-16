@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import useAPI from '../../hooks/useAPI';
 import Heading from './Heading';
 import PostDate from './PostDate';
-import Text from './Text/Text';
+import TextBox from './Text/TextBox';
 import Footer from './Footer';
 
 const StyledReviewWrapper = styled.div`
@@ -25,7 +25,7 @@ const Reviews = ({ product_id }) => {
       <StyledReviewWrapper>
         <Heading review_heading={review_heading} />
         <PostDate created_at={created_at} />
-        <Text review_text={review_text} />
+        <TextBox review_text={review_text} />
         <Footer username={username} />
       </StyledReviewWrapper>
     );

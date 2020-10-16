@@ -8,7 +8,8 @@ import Reviews from './Reviews/Reviews';
 const StyledWrapper = styled.div`
   color: #222;
   font-family: 'Roboto', arial, sans-serif;
-  width: 1024px;
+  min-width: 914px;
+  max-width: 1024px;
 `;
 
 const App = ({ match }) => (
