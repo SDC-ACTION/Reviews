@@ -6,9 +6,10 @@
   "license": "",
   "scripts": {
     "build": "webpack",
+    "start": "node server/server.js",
+    "start:dev": "nodemon server/server.js",
     "watch": "webpack --mode=development --watch",
     "db:seed": "node database/seed/seedRandomData.js",
-    "server:dev": "nodemon server/server.js",
     "test:client": "jest -c=./tests/client/jest.client.config.js",
     "test:client:watch": "jest -c=./tests/client/jest.client.config.js --watch",
     "test:db": "jest -c=./tests/database/jest.db.config.js --ci --runInBand",
@@ -20,7 +21,8 @@
     "mongoose": "^5.10.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "styled-components": "^5.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
