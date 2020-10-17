@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import LinkText from './LinkText';
 
 const StyledReviewText = styled.p`
-  display: ${(props) => props.display};
+  display: ${({ display }) => display};
   margin: 0px;
 `;
 
