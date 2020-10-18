@@ -9,14 +9,9 @@ import SearchReviews from '../../../client/components/SearchReviews/SearchReview
 
 describe('App Component', () => {
   const matchProp = { params: { id: 1 } };
-  it('should render a single node that has \'app-container\' as the classname', () => {
+  it('should have 4 children in the App component', () => {
     const wrapper = shallow(<App match={matchProp} />);
-    expect(wrapper.is('.app-container')).toBe(true);
-  });
-
-  it('should have 4 children in the \'app\' component', () => {
-    const wrapper = shallow(<App match={matchProp} />);
-    expect(wrapper.find('.app-container').children().length).toBe(4);
+    expect(wrapper.children().length).toBe(4);
   });
 
   it('should contain the Reviews, ReviewSummary, SearchReviews, & Title components', () => {

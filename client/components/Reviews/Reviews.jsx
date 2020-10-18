@@ -32,7 +32,7 @@ const Reviews = ({ product_id }) => {
     );
   }
 
-  return <div className="reviews-container" />;
+  return <StyledReviewWrapper />;
 };
 
 export default Reviews;

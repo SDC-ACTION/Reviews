@@ -9,7 +9,8 @@ module.exports = {
       outputName: 'junit-client.xml',
       suiteName: 'jest-client',
       outputDirectory: './artifacts',
-      classNameTemplate: 'jest-client',
+      classNameTemplate: '{classname}',
+      titleTemplate: '{title}',
     }],
   ],
 };

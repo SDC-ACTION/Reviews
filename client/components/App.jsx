@@ -13,7 +13,7 @@ const StyledWrapper = styled.div`
 `;
 
 const App = ({ match }) => (
-  <StyledWrapper className="app-container">
+  <StyledWrapper>
     <Title />
     <ReviewSummary product_id={Number(match.params.id)} />
     <SearchReviews product_id={Number(match.params.id)} />
