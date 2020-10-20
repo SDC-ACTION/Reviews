@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import useAPI from '../hooks/useAPI';
 import Title from './Title';
-import ReviewSummary from './ReviewSummary/ReviewSummary';
+import AverageRating from './ReviewSummary/AverageRating';
 import SearchReviews from './SearchReviews/SearchReviews';
 import Reviews from './Reviews/Reviews';
 
@@ -12,13 +13,17 @@ const StyledWrapper = styled.div`
   max-width: 1024px;
 `;
 
-const App = ({ match }) => (
-  <StyledWrapper>
-    <Title />
-    <ReviewSummary product_id={Number(match.params.id)} />
-    <SearchReviews product_id={Number(match.params.id)} />
-    <Reviews product_id={Number(match.params.id)} />
-  </StyledWrapper>
-);
+const App = ({ match }) => {
+  const reviewSummaryData = useAPI(`http://localhost:3001/api/reviews/${match.params.id}/summary`);
+
+  return (
+    <StyledWrapper>
+      <Title />
+      <AverageRating reviewSummary={reviewSummaryData} />
+      <SearchReviews />
+      <Reviews product_id={match.params.id} />
+    </StyledWrapper>
+  );
+};
 
 export default App;
