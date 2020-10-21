@@ -9,7 +9,8 @@ module.exports = {
       outputName: 'junit-db.xml',
       suiteName: 'jest-db',
       outputDirectory: './artifacts',
-      classNameTemplate: 'jest-db',
+      classNameTemplate: '{classname}',
+      titleTemplate: '{title}',
     }],
   ],
 };

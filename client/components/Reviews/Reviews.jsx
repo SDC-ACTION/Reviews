@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import useAPI from '../../hooks/useAPI';
 import Heading from './Heading';
-import PostDate from './PostDate';
-import Text from './Text';
+import Rating from './Rating/Rating';
+import TextBox from './TextBox/TextBox';
 import Footer from './Footer';
 
 const StyledReviewWrapper = styled.div`
@@ -15,23 +15,24 @@ const Reviews = ({ product_id }) => {
   const apiData = useAPI(`http://localhost:3001/api/reviews/${product_id}`);
   if (apiData) {
     const {
+      created_at,
       review_heading,
+      review_rating,
       review_text,
       username,
-      created_at,
     } = apiData[0];
 
     return (
       <StyledReviewWrapper>
         <Heading review_heading={review_heading} />
-        <PostDate created_at={created_at} />
-        <Text review_text={review_text} />
+        <Rating review_rating={review_rating} created_at={created_at} />
+        <TextBox review_text={review_text} />
         <Footer username={username} />
       </StyledReviewWrapper>
     );
   }
 
-  return <div className="reviews-container" />;
+  return <StyledReviewWrapper />;
 };
 
 export default Reviews;

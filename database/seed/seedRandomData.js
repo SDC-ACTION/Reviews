@@ -23,9 +23,13 @@ const heading = [
 ];
 
 const text = [
-  'test1', 'test2', 'test3', 'test4', 'test5',
-  'test6', 'test7', 'test8', 'test9', 'test10',
-  'test11', 'test12', 'test13', 'test14', 'test15',
+  `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Arcu non odio euismod lacinia at quis. Vel facilisis volutpat est velit egestas dui id ornare arcu. Est lorem ipsum dolor sit amet consectetur adipiscing. Quam lacus suspendisse faucibus interdum posuere. Sem viverra aliquet eget sit amet tellus cras adipiscing enim. Habitasse platea dictumst vestibulum rhoncus. Lacinia quis vel eros donec ac odio tempor orci dapibus. Dignissim enim sit amet venenatis urna cursus eget. Vehicula ipsum a arcu cursus vitae.
+
+  Sed augue lacus viverra vitae congue eu consequat. Commodo ullamcorper a lacus vestibulum sed arcu. Pellentesque adipiscing commodo elit at imperdiet dui accumsan. Sed libero enim sed faucibus turpis in eu mi. Ultricies integer quis auctor elit sed vulputate mi sit amet. Elementum sagittis vitae et leo. Et odio pellentesque diam volutpat commodo. Consequat mauris nunc congue nisi vitae suscipit tellus mauris. Nulla aliquet porttitor lacus luctus accumsan tortor posuere. Sed sed risus pretium quam vulputate dignissim suspendisse in est. Aliquet enim tortor at auctor urna nunc. Ullamcorper velit sed ullamcorper morbi tincidunt ornare. Non blandit massa enim nec dui nunc. Amet luctus venenatis lectus magna fringilla urna porttitor rhoncus. Sit amet aliquam id diam. Rhoncus mattis rhoncus urna neque viverra. Morbi leo urna molestie at elementum eu facilisis sed.
+
+  Adipiscing bibendum est ultricies integer quis auctor elit sed. Viverra vitae congue eu consequat. Rhoncus est pellentesque elit ullamcorper dignissim cras tincidunt. Tortor consequat id porta nibh venenatis. Risus nec feugiat in fermentum posuere urna nec tincidunt praesent. Mollis aliquam ut porttitor leo. Mollis aliquam ut porttitor leo a diam sollicitudin tempor. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. Amet risus nullam eget felis eget nunc lobortis. Eget duis at tellus at urna condimentum.`,
+
+  'Short',
 ];
 
 const reviewDocCount = [];
@@ -70,7 +74,7 @@ const seed = async () => {
     const randProduct = rng(1, 101);
     const randUser = usernames[rng(0, 15)];
     const randHeading = heading[rng(0, 5)];
-    const randText = text[rng(0, 15)];
+    const randText = text[rng(0, 2)];
 
     const starKey = {};
     starKey.$inc = {};

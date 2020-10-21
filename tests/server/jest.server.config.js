@@ -9,7 +9,8 @@ module.exports = {
       outputName: 'junit-server.xml',
       suiteName: 'jest-server',
       outputDirectory: './artifacts',
-      classNameTemplate: 'jest-server',
+      classNameTemplate: '{classname}',
+      titleTemplate: '{title}',
     }],
   ],
 };
