@@ -4,6 +4,7 @@ import Stars from '../Reviews/Rating/Stars';
 
 const StyledAverageRatingContainer = styled.div`
   display: inline-block;
+  float: left;
   height: 100px;
   padding-right: 24px;
   width: 70px;
@@ -17,9 +18,8 @@ const StyledLayout = styled.div`
 const StyledAverageRating = styled.p`
   color: #333;
   font-size: 48px;
-  height: 48px;
+  line-height: 48px;
   margin: 0;
-  padding-bottom: 3px;
   text-align: center;
 `;
 
@@ -32,29 +32,25 @@ const StyledTotalReviews = styled.p`
 `;
 
 const AverageRating = ({ reviewSummary }) => {
-  if (reviewSummary) {
-    const averageRating = (
-      reviewSummary[0].rating_1 * 1
-      + reviewSummary[0].rating_2 * 2
-      + reviewSummary[0].rating_3 * 3
-      + reviewSummary[0].rating_4 * 4
-      + reviewSummary[0].rating_5 * 5) / reviewSummary[0].total_reviews;
+  const averageRating = (
+    reviewSummary[0].rating_1 * 1
+    + reviewSummary[0].rating_2 * 2
+    + reviewSummary[0].rating_3 * 3
+    + reviewSummary[0].rating_4 * 4
+    + reviewSummary[0].rating_5 * 5) / reviewSummary[0].total_reviews;
 
-    const reviewWord = (reviewSummary[0].total_reviews === 1) ? 'review' : 'reviews';
-    const totalReviews = reviewSummary[0].total_reviews.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const reviewWord = (reviewSummary[0].total_reviews === 1) ? 'review' : 'reviews';
+  const totalReviews = reviewSummary[0].total_reviews.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-    return (
-      <StyledAverageRatingContainer>
-        <StyledLayout>
-          <StyledAverageRating>{averageRating.toFixed(1)}</StyledAverageRating>
-          <Stars review_rating={averageRating} />
-          <StyledTotalReviews>{`${totalReviews} ${reviewWord}`}</StyledTotalReviews>
-        </StyledLayout>
-      </StyledAverageRatingContainer>
-    );
-  }
-
-  return <div />;
+  return (
+    <StyledAverageRatingContainer>
+      <StyledLayout>
+        <StyledAverageRating>{averageRating.toFixed(1)}</StyledAverageRating>
+        <Stars review_rating={averageRating} />
+        <StyledTotalReviews>{`${totalReviews} ${reviewWord}`}</StyledTotalReviews>
+      </StyledLayout>
+    </StyledAverageRatingContainer>
+  );
 };
 
 export default AverageRating;

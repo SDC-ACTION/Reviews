@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import useAPI from '../hooks/useAPI';
 import Title from './Title';
 import AverageRating from './ReviewSummary/AverageRating';
+import ReviewGraph from './ReviewSummary/ReviewGraph/ReviewGraph';
 import SearchReviews from './SearchReviews/SearchReviews';
 import Reviews from './Reviews/Reviews';
 
@@ -15,15 +16,18 @@ const StyledWrapper = styled.div`
 
 const App = ({ match }) => {
   const reviewSummaryData = useAPI(`http://localhost:3001/api/reviews/${match.params.id}/summary`);
-
-  return (
-    <StyledWrapper>
-      <Title />
-      <AverageRating reviewSummary={reviewSummaryData} />
-      <SearchReviews />
-      <Reviews product_id={match.params.id} />
-    </StyledWrapper>
-  );
+  if (reviewSummaryData) {
+    return (
+      <StyledWrapper>
+        <Title />
+        <AverageRating reviewSummary={reviewSummaryData} />
+        <ReviewGraph reviewSummary={reviewSummaryData} />
+        <SearchReviews />
+        <Reviews product_id={match.params.id} />
+      </StyledWrapper>
+    );
+  }
+  return <div />;
 };
 
 export default App;
