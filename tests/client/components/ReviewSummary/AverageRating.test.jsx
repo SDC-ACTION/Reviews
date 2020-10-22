@@ -5,11 +5,6 @@ import AverageRating from '../../../../client/components/ReviewSummary/AverageRa
 import Stars from '../../../../client/components/Reviews/Rating/Stars';
 
 describe('AverageRating Component', () => {
-  it('should be empty when reviewSummary prop is null', () => {
-    const wrapper = shallow(<AverageRating reviewSummary={null} />);
-    expect(wrapper.children().length).toBe(0);
-  });
-
   it('should only render text at child 0 & 2 & a stars component in between', () => {
     const reviewSummary = [{
       total_reviews: 1,
