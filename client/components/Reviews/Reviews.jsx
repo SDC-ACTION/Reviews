@@ -5,6 +5,7 @@ import Heading from './Heading';
 import Rating from './Rating/Rating';
 import TextBox from './TextBox/TextBox';
 import Footer from './Footer';
+import AllReviews from './AllReviews';
 
 const StyledReviewWrapper = styled.div`
   font-size: 14px;
@@ -12,7 +13,7 @@ const StyledReviewWrapper = styled.div`
 `;
 
 const Reviews = ({ product_id }) => {
-  const apiData = useAPI(`http://localhost:3001/api/reviews/${product_id}`);
+  const apiData = useAPI(`http://localhost:3001/api/reviews/${product_id}?limit=1`);
   if (apiData) {
     const {
       created_at,
@@ -28,6 +29,7 @@ const Reviews = ({ product_id }) => {
         <Rating review_rating={review_rating} created_at={created_at} />
         <TextBox review_text={review_text} />
         <Footer username={username} />
+        <AllReviews />
       </StyledReviewWrapper>
     );
   }
