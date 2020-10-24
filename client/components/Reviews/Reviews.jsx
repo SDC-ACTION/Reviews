@@ -13,7 +13,7 @@ const StyledReviewWrapper = styled.div`
 `;
 
 const Reviews = ({ product_id }) => {
-  const apiData = useAPI(`http://localhost:3001/api/reviews/${product_id}?limit=1`);
+  const apiData = useAPI(`${process.env.API_URL}/${product_id}?limit=1`);
   if (apiData) {
     const {
       created_at,

@@ -3,7 +3,12 @@ const ReviewModel = require('../models/reviews.js');
 const ReviewSummaryModel = require('../models/reviewsummary.js');
 const CounterModel = require('../models/counter.js');
 
-mongoose.connect('mongodb://localhost/reviews-service', {
+const isProd = process.env.NODE_ENV === 'production';
+const mongoUri = (isProd)
+  ? 'mongodb://mongo:27017/reviews-service'
+  : 'mongodb://localhost/reviews-service';
+
+mongoose.connect(mongoUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
@@ -106,7 +111,7 @@ const seed = async () => {
     .then(() => console.log('Successfully Seeded Reviews'))
     .catch((err) => console.error('Error Seeding Reviews: ', err.message));
 
-  process.exit(0);
+  if (!isProd) process.exit(0);
 };
 
 seed();

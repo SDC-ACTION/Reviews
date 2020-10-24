@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/reviews-service', {
+const mongoUri = (process.env.NODE_ENV === 'production')
+  ? 'mongodb://mongo:27017/reviews-service'
+  : 'mongodb://localhost/reviews-service';
+
+mongoose.connect(mongoUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,

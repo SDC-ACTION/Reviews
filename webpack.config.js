@@ -1,6 +1,7 @@
+const webpack = require('webpack');
 const path = require('path');
 
-module.exports = {
+module.exports = (env) => ({
   entry: './client/index.jsx',
   output: {
     filename: 'bundle-reviews-service.js',
@@ -20,4 +21,7 @@ module.exports = {
       },
     ],
   },
-};
+  plugins: [
+    new webpack.DefinePlugin({ 'process.env.API_URL': JSON.stringify(`${env.API_URL}`) }),
+  ],
+});

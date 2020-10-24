@@ -5,10 +5,10 @@
   "author": "",
   "license": "",
   "scripts": {
-    "build": "webpack",
-    "start": "node server/server.js",
+    "build": "webpack --env.API_URL=http://18.222.37.28:3001/api/reviews",
+    "build:watch": "webpack --env.API_URL=http://localhost:3001/api/reviews --mode=development --watch",
+    "start": "NODE_ENV=production node server/server.js",
     "start:dev": "nodemon server/server.js",
-    "watch": "webpack --mode=development --watch",
     "db:seed": "node database/seed/seedRandomData.js",
     "test:client": "jest -c=./tests/client/jest.client.config.js",
     "test:client:watch": "jest -c=./tests/client/jest.client.config.js --watch",
@@ -43,7 +43,7 @@
     "eslint-plugin-react-hooks": "^4.0.0",
     "jest": "^26.4.2",
     "jest-junit": "^12.0.0",
-    "mongodb-memory-server": "^6.8.0",
+    "mongodb-memory-server-core": "^6.9.2",
     "supertest": "^5.0.0",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
