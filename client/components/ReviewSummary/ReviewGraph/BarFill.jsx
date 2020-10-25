@@ -11,12 +11,11 @@ const StyledBarFill = styled.div`
   background-color: #e7711b;
   border-radius: 4px;
   height: 8px;
-  width: ${({ width }) => width * 342}px;
 `;
 
 const BarFill = ({ total_reviews, reviewCount }) => (
   <StyledBarBackground>
-    <StyledBarFill width={reviewCount / total_reviews} />
+    <StyledBarFill style={{ width: `${(reviewCount / total_reviews) * 342}px` }} />
   </StyledBarBackground>
 );
 

@@ -19,13 +19,12 @@ const StyledStars = styled.div`
   margin: auto;
   position: absolute;
   top: 0;
-  width: ${({ rating }) => rating * 12}px;
 `;
 
 const Stars = ({ review_rating }) => (
   <StyledStarContainer>
-    <StyledStars rating={5} starImg={starsBlank} />
-    <StyledStars rating={review_rating} starImg={starsFill} />
+    <StyledStars style={{ width: '60px' }} starImg={starsBlank} />
+    <StyledStars style={{ width: `${review_rating * 12}px` }} starImg={starsFill} />
   </StyledStarContainer>
 );
 

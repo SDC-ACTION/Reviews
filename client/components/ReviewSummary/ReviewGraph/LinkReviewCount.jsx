@@ -5,18 +5,18 @@ const StyledReviewCount = styled.div`
   color: #222;
   display: inline-block;
   padding-left: 10px;
-  visibility: ${({ display }) => display};
+  visibility: hidden;
 `;
 
-const LinkReviewCount = ({ reviewCount, display }) => {
+const LinkReviewCount = ({ reviewCount }) => {
   const reviewWord = reviewCount === 1 ? 'review' : 'reviews';
   const formatReviewCount = reviewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
   return (
-    <StyledReviewCount display={display}>
+    <StyledReviewCount>
       {`${formatReviewCount} ${reviewWord}`}
     </StyledReviewCount>
   );
 };
 
-export default LinkReviewCount;
+export { LinkReviewCount, StyledReviewCount };

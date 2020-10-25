@@ -5,7 +5,7 @@
   "author": "",
   "license": "",
   "scripts": {
-    "build": "webpack --env.API_URL=http://18.222.37.28:3001/api/reviews",
+    "build": "webpack --env.API_URL=http://18.222.37.28:3001/api/reviews --mode=production",
     "build:watch": "webpack --env.API_URL=http://localhost:3001/api/reviews --mode=development --watch",
     "start": "NODE_ENV=production node server/server.js",
     "start:dev": "nodemon server/server.js",
