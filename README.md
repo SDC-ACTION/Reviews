@@ -10,24 +10,25 @@
 
 ## Table of Contents
 
-1. [Usage](#usage)
 1. [Requirements](#requirements)
+1. [Usage](#usage)
 1. [Development](#development)
+
+## Requirements
+
+- Node.js
+- MongoDB
 
 ## Usage
 
 1. Clone this repo and go to its root directory.
 1. Run `npm install` to install its dependencies.
 1. After the dependencies are installed, seed the database with `npm run db:seed`
-1. Once the database is seeded, run `npm run build` to build the browser components.
-1. After building the components, run `npm start` to start the application.
+1. Once the database is seeded, run `npm run build:dev` to build the browser components.
+1. After building the components, run `npm run start:dev` to start the application.
 1. You will then be able to access the app at **localhost:3001/products/{product_id}** where **{product_id}** is the Product ID number.
 
 The database seeding script `npm run db:seed` seeds Product ID numbers between 1 - 100 so going to http://localhost:3001/products/1 will show review information for the Product with a Product ID of 1.
-
-## Requirements
-
-- Node.js
 
 ## Development
 
