@@ -4,21 +4,14 @@ import BarFill from './BarFill';
 
 const StyledBarWrapper = styled.div`
   display: inline-block;
-  opacity: ${({ opacity }) => opacity};
   padding-left: 10px;
   width: 342px;
 `;
 
-const LinkReviewBar = ({
-  total_reviews, reviewCount, opacity, hoverCheck,
-}) => {
-  const setOpacity = (hoverCheck) ? 1 : opacity;
+const LinkReviewBar = ({ total_reviews, reviewCount }) => (
+  <StyledBarWrapper>
+    <BarFill total_reviews={total_reviews} reviewCount={reviewCount} />
+  </StyledBarWrapper>
+);
 
-  return (
-    <StyledBarWrapper opacity={setOpacity}>
-      <BarFill total_reviews={total_reviews} reviewCount={reviewCount} />
-    </StyledBarWrapper>
-  );
-};
-
-export default LinkReviewBar;
+export { LinkReviewBar, StyledBarWrapper };

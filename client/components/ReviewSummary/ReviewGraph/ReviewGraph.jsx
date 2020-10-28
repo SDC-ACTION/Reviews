@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import GraphLink from './GraphLink';
+import { StyledBarWrapper } from './LinkReviewBar';
+import { StyledReviewCount } from './LinkReviewCount';
 
 const StyledReviewGraphContainer = styled.div`
   display: inline-block;
@@ -11,19 +13,21 @@ const StyledLayout = styled.div`
   display: grid;
   grid-template-rows: 1f 1f 1f 1f 1f;
   height: 100%;
+
+  >:hover ${StyledReviewCount} {
+    visibility: visible;
+  }
+
+  &:hover ${StyledBarWrapper} {
+    opacity: 0.3;
+  }
+
+  >:hover ${StyledBarWrapper} {
+    opacity: 1;
+  }
 `;
 
 const ReviewGraph = ({ reviewSummary }) => {
-  const [graphOpacity, setGraphOpacity] = useState(1);
-
-  const mouseOverGraph = () => {
-    setGraphOpacity(0.3);
-  };
-
-  const mouseLeaveGraph = () => {
-    setGraphOpacity(1);
-  };
-
   const {
     rating_5,
     rating_4,
@@ -34,16 +38,13 @@ const ReviewGraph = ({ reviewSummary }) => {
   } = reviewSummary[0];
 
   return (
-    <StyledReviewGraphContainer
-      onMouseOver={mouseOverGraph}
-      onMouseLeave={mouseLeaveGraph}
-    >
+    <StyledReviewGraphContainer>
       <StyledLayout>
-        <GraphLink star={5} count={rating_5} total={total_reviews} opacity={graphOpacity} />
-        <GraphLink star={4} count={rating_4} total={total_reviews} opacity={graphOpacity} />
-        <GraphLink star={3} count={rating_3} total={total_reviews} opacity={graphOpacity} />
-        <GraphLink star={2} count={rating_2} total={total_reviews} opacity={graphOpacity} />
-        <GraphLink star={1} count={rating_1} total={total_reviews} opacity={graphOpacity} />
+        <GraphLink star={5} count={rating_5} total={total_reviews} />
+        <GraphLink star={4} count={rating_4} total={total_reviews} />
+        <GraphLink star={3} count={rating_3} total={total_reviews} />
+        <GraphLink star={2} count={rating_2} total={total_reviews} />
+        <GraphLink star={1} count={rating_1} total={total_reviews} />
       </StyledLayout>
     </StyledReviewGraphContainer>
   );

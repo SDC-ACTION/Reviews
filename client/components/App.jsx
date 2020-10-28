@@ -15,7 +15,7 @@ const StyledWrapper = styled.div`
 `;
 
 const App = ({ match }) => {
-  const reviewSummaryData = useAPI(`http://localhost:3001/api/reviews/${match.params.id}/summary`);
+  const reviewSummaryData = useAPI(`${process.env.API_URL}/${match.params.id}/summary`);
   if (reviewSummaryData) {
     return (
       <StyledWrapper>
