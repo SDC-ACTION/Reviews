@@ -10,7 +10,7 @@
     "build:dev:watch": "webpack --env.API_URL=http://localhost:3001/api/reviews --mode=development --watch",
     "start": "NODE_ENV=production node server/server.js",
     "start:dev": "node server/server.js",
-    "start:dev:watch": "node server/server.js",
+    "start:dev:watch": "nodemon server/server.js",
     "db:seed": "node database/seed/seedRandomData.js",
     "test:client": "jest -c=./tests/client/jest.client.config.js",
     "test:client:watch": "jest -c=./tests/client/jest.client.config.js --watch",

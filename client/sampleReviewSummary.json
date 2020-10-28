@@ -1,0 +1,20 @@
+[
+  {
+    "product_id": 1,
+    "total_reviews": 336,
+    "rating_1": 1,
+    "rating_2": 5,
+    "rating_3": 5,
+    "rating_4": 25,
+    "rating_5": 300
+  },
+  {
+    "product_id": 2,
+    "total_reviews": 15000,
+    "rating_1": 1000,
+    "rating_2": 2000,
+    "rating_3": 3000,
+    "rating_4": 4000,
+    "rating_5": 5000
+  }
+]

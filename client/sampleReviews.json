@@ -1,0 +1,20 @@
+[
+  {
+    "review_id": 1,
+    "product_id": 1,
+    "username": "BillyBob9",
+    "review_heading": "Cool",
+    "review_text": "What a great product!",
+    "review_rating": 4,
+    "created_at": "2011-10-05T14:48:00.000Z"
+  },
+  {
+    "review_id": 2,
+    "product_id": 2,
+    "username": "Hater4242",
+    "review_heading": "Terrible",
+    "review_text": "Sea ne summo partem mnesarchum, utinam graecis recteque ei vis, sit et tollit tibique delicatissimi. Vitae consul sed ea. Ea tale neglegentur eos, ea assentior neglegentur vim. Ne suavitate iracundia pri.Vim soluta sanctus ad, at adhuc munere sit. Alia utinam inermis te eam, eum essent nominavi consectetuer eu. Ius ad aperiri aliquid lucilius, sea at natum senserit scribentur. Sit te enim iudico ocurreret. Accumsan consetetur has ei, ex tibique mandamus eum. Ut usu cibo oportere principes, an eam paulo viris everti.Vivendum menandri theophrastus cum cu. Id nec utroque nominavi offendit, quo ea prompta definitionem. Ad quo animal diceret mentitum. Quot habeo interesset in has, eam no utinam cetero sensibus, ne eum utamur laoreet. Ea solet intellegat pertinacia mel. Ei aperiri fierent salutandi vel, vim in invidunt convenire argumentum, viderer vocibus scripserit eu mei.",
+    "review_rating": 1,
+    "created_at": "2011-10-05T14:48:00.000Z"
+  }
+]
