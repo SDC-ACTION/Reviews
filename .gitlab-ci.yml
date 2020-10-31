@@ -1,38 +1,47 @@
 image: node:latest
 
 stages:
-  - build
   - test
+  - build
+  - deploy
 
 cache:
   paths:
     - node_modules/
 
-build:
-  stage: build
+test:
+  stage: test
   script:
     - npm install
-
-test_db:
-  stage: test
-  script:
     - npm run test:db
-  artifacts:
-    reports:
-        junit: artifacts/junit-*.xml
-
-test_api:
-  stage: test
-  script:
     - npm run test:server
-  artifacts:
-    reports:
-        junit: artifacts/junit-*.xml
-
-test_client:
-  stage: test
-  script:
     - npm run test:client
   artifacts:
     reports:
         junit: artifacts/junit-*.xml
+
+build_image:
+  stage: build
+  cache: {}
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - echo $DOCKER_HUB_TOKEN | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+  script:
+    - docker build --tag "$DOCKER_HUB_IMAGE" .
+    - docker push "$DOCKER_HUB_IMAGE"
+  variables:
+    DOCKER_HUB_IMAGE: tandyn/rpt23-reviews-service
+  only:
+    - master
+
+deploy_ec2:
+  stage: deploy
+  cache: {}
+  tags:
+    - tandy
+  script:
+    - ssh ec2-user@$DEPLOY_SERVER "df -hT && docker-compose pull && docker-compose down -v && docker-compose up -d && docker rmi $(docker images -q --filter "dangling=true") && df -hT"
+  only:
+    - master
