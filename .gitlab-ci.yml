@@ -42,6 +42,6 @@ deploy_ec2:
   tags:
     - tandy
   script:
-    - ssh ec2-user@$DEPLOY_SERVER "df -hT && docker-compose pull && docker-compose down -v && docker-compose up -d && docker rmi $(docker images -q --filter "dangling=true") && df -hT"
+    - ssh ec2-user@$DEPLOY_SERVER "bash pull-new-images"
   only:
     - master
