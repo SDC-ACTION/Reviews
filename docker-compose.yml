@@ -3,7 +3,7 @@ services:
   app:
     container_name: reviews-service
     restart: always
-    build: .
+    image: tandyn/rpt23-reviews-service
     ports:
       - '3001:3001'
     links:
@@ -14,3 +14,9 @@ services:
     image: mongo
     ports:
       - '27017:27017'
+  proxy:
+    container_name: proxy
+    restart: always
+    image: tandyn/rpt23-proxy-server
+    ports:
+      - '80:80'
