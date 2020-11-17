@@ -4,6 +4,7 @@ const { getReviewSummary } = require('../../database/methods/reviewsummary.js');
 const { addReview } = require('../../database/methods/reviews.js');
 const { queryReviewRating } = require('../middleware/queryParams.js');
 const { updateReview } = require('../../database/methods/update/reviews.js');
+const { deleteReview } = require('../../database/methods/delete/reviews.js');
 const { checkRequestBody } = require('../middleware/checkRequestBody.js');
 const { checkForReviewId } = require('../middleware/checkForReviewId.js');
 
@@ -93,6 +94,17 @@ router.route('/:product_id')
         });
       } catch {
         console.log('there')
+        res.status(500).send('Internal Server Error.');
+      }
+    });
+
+  router.route('/:review_id/delete')
+    .delete(async (req, res) => {
+      try {
+        deleteReview(req.options.review_id);
+        res.sendStatus(200);
+      } catch(err) {
+        console.error(err)
         res.status(500).send('Internal Server Error.');
       }
     });
