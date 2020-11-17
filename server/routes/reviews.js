@@ -2,6 +2,7 @@ const express = require('express');
 const { getReviews } = require('../../database/methods/reviews.js');
 const { getReviewSummary } = require('../../database/methods/reviewsummary.js');
 const { queryReviewRating } = require('../middleware/queryParams.js');
+const { updateReview } = require('../../database/methods/update/reviews.js');
 
 const router = express.Router();
 
@@ -11,6 +12,15 @@ router.param('product_id', (req, res, next, product_id) => {
     return;
   }
   req.options = { product_id: Number(product_id) };
+  next();
+});
+
+router.param('review_id', (req, res, next, review_id) => {
+  if (Number.isNaN(Number(review_id))) {
+    res.status(400).send('Bad Request.');
+    return;
+  }
+  req.options = { review_id: Number(review_id) };
   next();
 });
 
@@ -41,5 +51,17 @@ router.route('/:product_id')
       res.status(500).send('Internal Server Error.');
     }
   });
+
+  router.route('/:review_id/update')
+    .patch(async (req, res) => {
+      try {
+        let options = {review_id: req.options.review_id};
+        console.log(req.body);
+        await updateReview(options, req.body);
+        res.sendStatus(200);
+      } catch {
+        res.status(500).send('Internal Server Error.');
+      }
+    });
 
 module.exports = router;
