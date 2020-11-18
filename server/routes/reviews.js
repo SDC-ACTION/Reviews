@@ -6,7 +6,6 @@ const { queryReviewRating } = require('../middleware/queryParams.js');
 const { updateReview } = require('../../database/methods/update/reviews.js');
 const { deleteReview } = require('../../database/methods/delete/reviews.js');
 const { checkRequestBody } = require('../middleware/checkRequestBody.js');
-const { checkForReviewId } = require('../middleware/checkForReviewId.js');
 
 const router = express.Router();
 
@@ -81,10 +80,10 @@ router.route('/:product_id')
       }
     });
 
-  router.route('/:review_id/delete')
+  router.route('/delete')
     .delete(async (req, res) => {
       try {
-        deleteReview(req.options.review_id);
+        deleteReview(req.body.review_id);
         res.sendStatus(200);
       } catch(err) {
         console.error(err)
