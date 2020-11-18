@@ -68,30 +68,13 @@ router.route('/:product_id')
       }
     });
 
-  router.route('/:review_id/create')
+  router.route('/add-review')
     .post(async (req, res) => {
+      console.log('endpoint reached');
       try {
-        let newReviewId = req.options;
-        let newReview = Object.assign({
-          product_id: req.body.product_id, 
-          username: req.body.username, 
-          review_heading: req.body.review_heading, 
-          review_text: req.body.review_text,
-          review_rating: req.body.review_rating}, newReviewId);
-
         checkRequestBody(req.body);
-        checkForReviewId(newReviewId.review_id)
-        .then((result) => {
-          if (!result) {
-            addReview(newReview);
-            res.sendStatus(200);
-          } else {
-            res.status(500).send('Internal Server Error.');
-          }
-        })
-        .catch((err) => {
-          res.status(500).send('Internal Server Error.');
-        });
+        addReview(req.body);
+        res.sendStatus(200);
       } catch {
         console.log('there')
         res.status(500).send('Internal Server Error.');
