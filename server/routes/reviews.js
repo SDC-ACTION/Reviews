@@ -6,6 +6,7 @@ const { queryReviewRating } = require('../middleware/queryParams.js');
 const { updateReview } = require('../../database/methods/update/reviews.js');
 const { deleteReview } = require('../../database/methods/delete/reviews.js');
 const { checkRequestBody } = require('../middleware/checkRequestBody.js');
+const { getLastReviewId } = require('../../database/methods/reviews.js');
 
 const router = express.Router();
 
@@ -55,40 +56,51 @@ router.route('/:product_id')
     }
   });
 
-  router.route('/:review_id/update')
-    .patch(async (req, res) => {
-      try {
-        let options = {review_id: req.options.review_id};
-        console.log(req.body);
-        await updateReview(options, req.body);
-        res.sendStatus(200);
-      } catch {
-        res.status(500).send('Internal Server Error.');
-      }
-    });
+router.route('/:review_id/update')
+  .patch(async (req, res) => {
+    try {
+      let options = {review_id: req.options.review_id};
+      console.log(req.body);
+      await updateReview(options, req.body);
+      res.sendStatus(200);
+    } catch {
+      res.status(500).send('Internal Server Error.');
+    }
+  });
 
-  router.route('/add-review')
-    .post(async (req, res) => {
-      console.log('endpoint reached');
-      try {
-        checkRequestBody(req.body);
-        addReview(req.body);
-        res.sendStatus(200);
-      } catch {
-        console.log('there')
-        res.status(500).send('Internal Server Error.');
-      }
-    });
+router.route('/add-review')
+  .post(async (req, res) => {
+    try {
+      checkRequestBody(req.body);
+      addReview(req.body);
+      res.sendStatus(200);
+    } catch {
+      console.log('there')
+      res.status(500).send('Internal Server Error.');
+    }
+  });
 
-  router.route('/delete')
-    .delete(async (req, res) => {
-      try {
-        deleteReview(req.body.review_id);
-        res.sendStatus(200);
-      } catch(err) {
-        console.error(err)
-        res.status(500).send('Internal Server Error.');
-      }
-    });
+router.route('/delete')
+  .delete(async (req, res) => {
+    try {
+      getLastReviewId()
+      .then(async (response) => {
+        deleteReview(req.body.review_id)
+        .then(async () => {
+          await updateReview({review_id: response[0].review_id}, {review_id: req.body.review_id})
+          res.sendStatus(200);
+        })
+        .catch((err) => {
+          throw err;
+        });
+      })
+      .catch((err) => {
+        throw err;
+      });
+    } catch(err) {
+      console.error(err)
+      res.status(500).send('Internal Server Error.');
+    }
+  });
 
 module.exports = router;
