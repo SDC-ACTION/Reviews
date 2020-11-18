@@ -6,6 +6,14 @@ const incrementReviewSeq = () => CounterModel.findOneAndUpdate(
   { upsert: true },
 );
 
+const decrementReviewSeq = () => CounterModel.findOneAndUpdate(
+  { model_name: 'review' },
+  { $inc: { seq: -1 } },
+  { upsert: true },
+);
+
+
 module.exports = {
   incrementReviewSeq,
+  decrementReviewSeq
 };
