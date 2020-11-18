@@ -13,7 +13,12 @@ const addReview = (review) => new Promise((resolve, reject) => {
 
 const getReviews = (options, limit = 0) => ReviewModel.find(options, '-_id -__v').limit(limit);
 
+const getLastReviewId = () => {
+  return ReviewModel.find().sort({review_id: -1}).limit(1);
+};
+
 module.exports = {
   addReview,
   getReviews,
+  getLastReviewId
 };
