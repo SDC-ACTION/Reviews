@@ -56,11 +56,10 @@ router.route('/:product_id')
     }
   });
 
-router.route('/:review_id/update')
+router.route('/update')
   .patch(async (req, res) => {
     try {
-      let options = {review_id: req.options.review_id};
-      console.log(req.body);
+      let options = {review_id: req.body.review_id};
       await updateReview(options, req.body);
       res.sendStatus(200);
     } catch {
