@@ -1,12 +1,13 @@
 const ReviewModel = require('../../models/reviews.js');
+const counterMethods = require('../counter.js');
 
-const deleteReview = (reviewId) => {
-    return ReviewModel.deleteOne({review_id: reviewId}, (err, res) => {
-        if (err) {
-            throw err;
-        } 
-    });
-};
+const deleteReview = (reviewId) => new Promise((resolve, reject) => {
+    counterMethods.decrementReviewSeq()
+    .then((counter) => {
+        resolve(ReviewModel.findOneAndDelete({review_id: reviewId}));
+    })
+    .catch((err) => reject(err));
+});
 
 module.exports = {
     deleteReview
