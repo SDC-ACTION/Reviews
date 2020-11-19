@@ -68,7 +68,7 @@ router.route('/update')
   });
 
 router.route('/add-review')
-  .post(async (req, res) => {
+  .post((req, res) => {
     try {
       checkRequestBody(req.body);
       addReview(req.body);
@@ -82,20 +82,10 @@ router.route('/add-review')
 router.route('/delete')
   .delete(async (req, res) => {
     try {
-      getLastReviewId()
-      .then(async (response) => {
-        deleteReview(req.body.review_id)
-        .then(async () => {
-          await updateReview({review_id: response[0].review_id}, {review_id: req.body.review_id})
-          res.sendStatus(200);
-        })
-        .catch((err) => {
-          throw err;
-        });
-      })
-      .catch((err) => {
-        throw err;
-      });
+      let lastId = await getLastReviewId();
+      await deleteReview(req.body.review_id)
+      await updateReview({review_id: lastId[0].review_id}, {review_id: req.body.review_id})
+      res.sendStatus(200); 
     } catch(err) {
       console.error(err)
       res.status(500).send('Internal Server Error.');
