@@ -12,6 +12,7 @@
 
 1. [Requirements](#requirements)
 1. [Usage](#usage)
+1. [API](#api)
 1. [Development](#development)
 
 ## Requirements
@@ -29,6 +30,25 @@
 1. You will then be able to access the app at **localhost:3001/products/{product_id}** where **{product_id}** is the Product ID number.
 
 The database seeding script `npm run db:seed` seeds Product ID numbers between 1 - 100 so going to http://localhost:3001/products/1 will show review information for the Product with a Product ID of 1.
+
+## API
+- POST
+  - /api/reviews/add-review
+    - creates a new review using information prodivided in the request body
+      - request body must contain product_id, username, review_heading, review_text, and review_rating
+- GET
+  - /api/reviews/:product_id/summary
+    - retrieves the average rating/summary for a review of a product
+  - /api/reviews/:product_id
+    - retrieves all the reviews for a product
+- PATCH
+  - /api/reviews/update
+    - updates an existing review using information provided in the request body
+      - request body must contain review_id, in addition to properties to be updated
+- DELETE 
+  - /api/reviews/delete
+    - removes an existing review from the database using information provided in the request body
+      - request body must contain review_id
 
 ## Development
 
