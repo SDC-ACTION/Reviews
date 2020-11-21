@@ -5,7 +5,7 @@ const pgp = require('pg-promise');
 const client = new Client({
     user: 'admin',
     password: 'password',
-    database: 'postgres'
+    database: 'reviews_service'
 });
 
 
@@ -17,3 +17,4 @@ client.connect()
     console.error('oof', err.stack);
 });
 
+ 
