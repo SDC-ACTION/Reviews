@@ -1,4 +1,4 @@
-require('../database');
+require('../database/postgres');
 const app = require('./app.js');
 
 const isProd = process.env.NODE_ENV === 'production';
