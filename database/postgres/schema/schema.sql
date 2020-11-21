@@ -9,17 +9,16 @@ CREATE TABLE products (
 
 CREATE TABLE users (
     user_id INTEGER PRIMARY KEY,
-    username CHAR NOT NULL
+    username CHAR(30)
 );
 
 CREATE TABLE reviews (
     review_id INTEGER PRIMARY KEY,
     product_id INTEGER REFERENCES products (product_id),
-    username CHAR,
-    review_heading CHAR, 
-    review_text CHAR,
-    review_rating INTEGER NOT NULL,
-    date_created CHAR
+    user_id INTEGER REFERENCES users (user_id),
+    review_heading CHAR(30), 
+    review_text CHAR(30),
+    review_rating INTEGER NOT NULL
 );
 
 CREATE TABLE review_summaries (
