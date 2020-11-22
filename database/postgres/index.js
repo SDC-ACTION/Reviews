@@ -11,10 +11,10 @@ const client = new Client({
 
 client.connect()
 .then(() => {
-    console.log('What\'s popping world??');
+    console.log('Connected to ProgreSQL database!');
 })
 .catch((err) => {
-    console.error('oof', err.stack);
+    console.error('Error connecting to database: ', err.stack);
 });
 
  
