@@ -1,8 +1,5 @@
 const { Client } = require('pg');
-const pgp = require('pg-promise');
-const users = require('../reviewUsernameData.js');
-const reviewHeading = require('../reviewHeadingData.js');
-const reviewText = require('../reviewTextData.js');
+const usersData = require('../reviewUsernameData.js');
 const reviewHeadingData = require('../reviewHeadingData.js');
 const reviewTextData = require('../reviewTextData.js');
 
@@ -12,79 +9,53 @@ const client = new Client({
     database: 'reviews_service'
 });
 
-
 client.connect()
 .then(() => {
-    console.log('What\'s popping world??');
+    console.log('Connected to the database!');
 })
 .catch((err) => {
-    console.error('oof', err.stack);
+    console.error('Error connecting to the database: ', err.stack);
 });
 
-const products = 40;
-const reviews = 1;
-
 const seed = async () => {
-    await client.query('DELETE FROM users WHERE user_id >= 0');
-    await client.query('DELETE FROM products WHERE product_id >= 0');
-    await client.query('DELETE FROM reviews WHERE review_id >= 0');
+    let max = 15000000;
+    let min = 10000000;
+    let products = Math.floor(Math.random() * min);
+    let reviews = Math.floor(Math.random() * (max-products) + products);
 
-    let userData = [];
-    let productData = [];
-    for (let i = 0; i < users.length; i++) {
-        userData.push(client.query(`INSERT INTO users VALUES(${i}, '${users[i]}');`));
+    while (products + reviews < min) {
+         products = Math.floor(Math.random() * min);
+         reviews = Math.floor(Math.random() * (max-products) + products);
     }
-
-    await Promise.all(userData)
-    .then(() => {
-        console.log('Successfully seeded users table!');
-    })
-    .catch((err) => {
-        console.error('Error seeding users table: ',err);
-        process.exit(0);
-    });
+  
+    await client.query('DELETE FROM review_summaries WHERE summary_id >= 0');
+    await client.query('DELETE FROM reviews WHERE review_id >= 0');
+    await client.query('BEGIN');
+    await client.query('PREPARE initialize_summaries (int, int) AS INSERT INTO review_summaries VALUES ($1, $2)')
 
     for (let i = 0; i < products; i++) {
-        productData.push(client.query(`INSERT INTO products VALUES(${i})`));
+        await client.query(`EXECUTE initialize_summaries(${i}, ${i})`);
+        process.stdout.write(`loading: ${i} / ${products + reviews}\r`);
     }
-
-    await Promise.all(productData)
-    .then(() => {
-        console.log('Successfully seeded products table!');
-    })
-    .catch((err) => {
-        console.error('Error seeding products table:', err);
-        process.exit(0);
-    });
-
-
+    
+    process.stdout.clearLine();
+    console.log('Summaries initialized!');
+    await(client.query('PREPARE insert_review (int, int, char(30), char(30), char(30), int) AS INSERT INTO reviews VALUES($1, $2, $3, $4, $5, $6)'));
+    
     for (let i = 0; i < reviews; i++) {
-        //create function that generates random int for product & user id's
-        client.query(`INSERT INTO reviews VALUES(${i}, (SELECT product_id FROM products WHERE product_id = 10), (SELECT username FROM users WHERE user_id = 10), 'this is a heading', 'this is a review', ${5})`)
-        .then(() => {
-            console.log('Seeded a review!');
-            process.exit(0);
-        })
-        .catch((err) => {
-            console.error('Error seeding the review: ', err);
-            process.exit(0);
-        });
+        let productId = Math.floor(Math.random() * products);
+        let userId = Math.floor(Math.random() * usersData.length);
+        let reviewRating = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
+        
+        await client.query(`EXECUTE insert_review(${i}, ${productId}, '${usersData[userId]}', '${reviewHeadingData[Math.floor(Math.random() * reviewHeadingData.length)]}', '${reviewTextData[Math.floor(Math.random() * reviewTextData.length)]}', ${reviewRating})`);
+        process.stdout.write(`loading: ${products + i} / ${products + reviews}\r`);
     }
 
-    // await Promise.all(productData)
-    // .then(() => {
-    //     console.log('Successfully seeded reviews table!');
-    //     process.exit(0);
-    // })
-    // .catch((err) => {
-    //     console.error('Error seeding reviews table:', err);
-    // });
-
+    process.stdout.clearLine();
+    await client.query('END');
+    console.log('reviews table seeded!');
+    console.log(`${products + reviews} records loaded to the database!`);
+    process.exit(0);
 }
 
 seed();
-
-
-
-
- 
