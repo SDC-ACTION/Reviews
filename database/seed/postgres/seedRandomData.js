@@ -2,11 +2,8 @@ const { Client } = require('pg');
 const usersData = require('../reviewUsernameData.js');
 const reviewHeadingData = require('../reviewHeadingData.js');
 const reviewTextData = require('../reviewTextData.js');
-const reviews = require('../../models/reviews.js');
 
 const client = new Client({
-    user: 'admin',
-    password: 'password',
     database: 'reviews_service'
 });
 
@@ -19,7 +16,7 @@ client.connect()
 });
 
 const seed = async () => {
-    let products = 170000;
+    let products = 6000000;
   
     await client.query('DELETE FROM review_summaries WHERE summary_id >= 0');
     await client.query('DELETE FROM reviews WHERE review_id >= 0');
@@ -32,6 +29,7 @@ const seed = async () => {
         let maxRatingQuantity = Math.floor(Math.random() * (6-1) + 1);
         let rating1 = 0, rating2 = 0, rating3 = 0, rating4 = 0, rating5 = 0;
         let ratingQuantity;
+
         while (rating1 + rating2 + rating3 + rating4 + rating5 < maxRatingQuantity) {
             let rating = Math.floor(Math.random() * 5);
             if(rating == 1) {
@@ -45,50 +43,50 @@ const seed = async () => {
             } else {
                 rating5 += 1;
             }
-
         }
 
         ratingQuantity = rating1+rating2+rating3+rating4+rating5;
         await client.query(`EXECUTE populate_summaries(${i}, ${i}, ${rating1}, ${rating2}, ${rating3}, ${rating4}, ${rating5}, ${ratingQuantity})`)
         .then( async (data) => {
-            process.stdout.write(`loading: ${i+reviewId}\r`);
+            process.stdout.write(`Loading: ${i+reviewId}\r`);
             for (let j = 0; j < ratingQuantity; j++) {
                 let userId = Math.floor(Math.random() * usersData.length);
                 let headingText = Math.floor(Math.random() * reviewTextData.length);
-                        if(rating1 > 0) {
-                            await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userId]}', '${reviewHeadingData[headingText]}', 'text', ${1})`)
-                            reviewId++;
-                            rating1--;
-                        } else if(rating2 > 0) {
-                            await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userId]}', '${reviewHeadingData[headingText]}', 'text', ${2})`)
-                            reviewId++;
-                            rating2--;
-                        } else if(rating3 > 0) {
-                            await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userId]}', '${reviewHeadingData[headingText]}', 'text', ${3})`)
-                            reviewId++;
-                            rating3--;
-                        } else if(rating4 > 0) {
-                            await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userId]}', '${reviewHeadingData[headingText]}', 'text', ${4})`)
-                            reviewId++;
-                            rating4--;
-                        } else {
-                            await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userId]}', '${reviewHeadingData[headingText]}', 'text', ${5})`)
-                            reviewId++;
-                            rating5--;
-                        }
-                        process.stdout.write(`loading: ${i + reviewId}\r`);
-                    }
-                })
-                .catch((err) => {
-                    console.log('ERROR POPULATING SUMMARIES: ', err);
-                });
+                if(rating1 > 0) {
+                    await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userId]}', '${reviewHeadingData[headingText]}', 'text', ${1})`)
+                    reviewId++;
+                    rating1--;
+                } else if(rating2 > 0) {
+                    await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userId]}', '${reviewHeadingData[headingText]}', 'text', ${2})`)
+                    reviewId++;
+                    rating2--;
+                } else if(rating3 > 0) {
+                    await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userId]}', '${reviewHeadingData[headingText]}', 'text', ${3})`)
+                    reviewId++;
+                    rating3--;
+                } else if(rating4 > 0) {
+                    await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userId]}', '${reviewHeadingData[headingText]}', 'text', ${4})`)
+                    reviewId++;
+                    rating4--;
+                } else {
+                    await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userId]}', '${reviewHeadingData[headingText]}', 'text', ${5})`)
+                    reviewId++;
+                    rating5--;
+                }
+                process.stdout.write(`Loading: ${i + reviewId}\r`);
+            }
+        })
+        .catch((err) => {
+            console.log('Error seeding database: ', err);
+            process.exit(0);
+        });
     }
 
-    process.stdout.clearLine();
     await client.query('END');
-    console.log(`${reviewId} reviews added!`);
-    console.log(`${products} summaries added!`);
     console.log(`${products+reviewId} total records added!`);
+    console.log('------------------');
+    console.log(`${reviewId} reviews`);
+    console.log(`${products} summaries`);
     process.exit(0);
 }
 
