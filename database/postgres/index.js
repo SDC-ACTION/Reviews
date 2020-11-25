@@ -3,8 +3,6 @@ const pgp = require('pg-promise');
 
 
 const client = new Client({
-    user: 'admin',
-    password: 'password',
     database: 'reviews_service'
 });
 

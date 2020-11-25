@@ -16,7 +16,8 @@ client.connect()
 });
 
 const seed = async () => {
-    let products = 6000000;
+    let products = 100;
+    let reviewId = 0;
   
     await client.query('DELETE FROM review_summaries WHERE summary_id >= 0');
     await client.query('DELETE FROM reviews WHERE review_id >= 0');
@@ -24,7 +25,6 @@ const seed = async () => {
     await client.query('PREPARE insert_summary (int, int, int, int, int, int, int, int) AS INSERT INTO review_summaries VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING product_id, rating_1, rating_2, rating_3, rating_4, rating_5');
     await client.query('PREPARE insert_review (int, int, char(30), char(30), char(30), int) AS INSERT INTO reviews VALUES($1, $2, $3, $4, $5, $6)');
     
-    let reviewId = 0;
     for (let i = 0; i < products; i++) {
         let maxRatingQuantity = Math.floor(Math.random() * (6-1) + 1);
         let rating1 = 0, rating2 = 0, rating3 = 0, rating4 = 0, rating5 = 0;
@@ -50,26 +50,28 @@ const seed = async () => {
         .then( async (data) => {
             process.stdout.write(`Loading: ${i+reviewId}\r`);
             for (let j = 0; j < ratingQuantity; j++) {
-                let userId = Math.floor(Math.random() * usersData.length);
-                let headingText = Math.floor(Math.random() * reviewTextData.length);
+                let userIndex = Math.floor(Math.random() * usersData.length);
+                let headingIndex = Math.floor(Math.random() * reviewTextData.length);
+                let textIndex = Math.floor(Math.random() * reviewTextData.length);
+
                 if(rating1 > 0) {
-                    await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userId]}', '${reviewHeadingData[headingText]}', 'text', ${1})`)
+                    await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userIndex]}', '${reviewHeadingData[headingIndex]}', '${reviewTextData[textIndex]}', ${1})`)
                     reviewId++;
                     rating1--;
                 } else if(rating2 > 0) {
-                    await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userId]}', '${reviewHeadingData[headingText]}', 'text', ${2})`)
+                    await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userIndex]}', '${reviewHeadingData[headingIndex]}', '${reviewTextData[textIndex]}', ${2})`)
                     reviewId++;
                     rating2--;
                 } else if(rating3 > 0) {
-                    await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userId]}', '${reviewHeadingData[headingText]}', 'text', ${3})`)
+                    await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userIndex]}', '${reviewHeadingData[headingIndex]}', '${reviewTextData[textIndex]}', ${3})`)
                     reviewId++;
                     rating3--;
                 } else if(rating4 > 0) {
-                    await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userId]}', '${reviewHeadingData[headingText]}', 'text', ${4})`)
+                    await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userIndex]}', '${reviewHeadingData[headingIndex]}', '${reviewTextData[textIndex]}', ${4})`)
                     reviewId++;
                     rating4--;
                 } else {
-                    await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userId]}', '${reviewHeadingData[headingText]}', 'text', ${5})`)
+                    await client.query(`EXECUTE insert_review(${reviewId}, ${data.rows[0].product_id}, '${usersData[userIndex]}', '${reviewHeadingData[headingIndex]}', '${reviewTextData[textIndex]}', ${5})`)
                     reviewId++;
                     rating5--;
                 }
