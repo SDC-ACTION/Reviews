@@ -21,7 +21,7 @@ const seed = async () => {
     await client.query('DELETE FROM review_summaries WHERE summary_id >= 0');
     await client.query('DELETE FROM reviews WHERE review_id >= 0');
     await client.query('BEGIN');
-    await client.query('PREPARE populate_summaries (int, int, int, int, int, int, int, int) AS INSERT INTO review_summaries VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING product_id, rating_1, rating_2, rating_3, rating_4, rating_5');
+    await client.query('PREPARE insert_summary (int, int, int, int, int, int, int, int) AS INSERT INTO review_summaries VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING product_id, rating_1, rating_2, rating_3, rating_4, rating_5');
     await client.query('PREPARE insert_review (int, int, char(30), char(30), char(30), int) AS INSERT INTO reviews VALUES($1, $2, $3, $4, $5, $6)');
     
     let reviewId = 0;
@@ -46,7 +46,7 @@ const seed = async () => {
         }
 
         ratingQuantity = rating1+rating2+rating3+rating4+rating5;
-        await client.query(`EXECUTE populate_summaries(${i}, ${i}, ${rating1}, ${rating2}, ${rating3}, ${rating4}, ${rating5}, ${ratingQuantity})`)
+        await client.query(`EXECUTE insert_summary(${i}, ${i}, ${rating1}, ${rating2}, ${rating3}, ${rating4}, ${rating5}, ${ratingQuantity})`)
         .then( async (data) => {
             process.stdout.write(`Loading: ${i+reviewId}\r`);
             for (let j = 0; j < ratingQuantity; j++) {
