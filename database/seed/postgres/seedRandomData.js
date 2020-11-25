@@ -16,7 +16,7 @@ client.connect()
 });
 
 const seed = async () => {
-    let products = 100;
+    let products = 6000000;
     let reviewId = 0;
   
     await client.query('DELETE FROM review_summaries WHERE summary_id >= 0');
