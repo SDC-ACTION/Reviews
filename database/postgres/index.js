@@ -1,11 +1,8 @@
 const { Client } = require('pg');
-const pgp = require('pg-promise');
-
 
 const client = new Client({
     database: 'reviews_service'
 });
-
 
 client.connect()
 .then(() => {
@@ -15,4 +12,4 @@ client.connect()
     console.error('Error connecting to database: ', err.stack);
 });
 
- 
+module.exports = client;

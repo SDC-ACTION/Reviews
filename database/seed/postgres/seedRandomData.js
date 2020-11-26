@@ -1,19 +1,7 @@
-const { Client } = require('pg');
+const client = require('../../postgres/index.js');
 const usersData = require('../reviewUsernameData.js');
 const reviewHeadingData = require('../reviewHeadingData.js');
 const reviewTextData = require('../reviewTextData.js');
-
-const client = new Client({
-    database: 'reviews_service'
-});
-
-client.connect()
-.then(() => {
-    console.log('Connected to the database!');
-})
-.catch((err) => {
-    console.error('Error connecting to the database: ', err.stack);
-});
 
 const seed = async () => {
     let products = 6000000;
