@@ -11,12 +11,11 @@ CREATE TABLE reviews (
 );
 
 CREATE TABLE review_summaries (
-    summary_id INTEGER PRIMARY KEY,
-    product_id INTEGER,
+    product_id INTEGER PRIMARY KEY,
     rating_1 INTEGER DEFAULT 0,
     rating_2 INTEGER DEFAULT 0,
     rating_3 INTEGER DEFAULT 0, 
     rating_4 INTEGER DEFAULT 0,
     rating_5 INTEGER DEFAULT 0,
-    rating_quantity INTEGER DEFAULT 0
+    total_reviews INTEGER DEFAULT 0
 );
