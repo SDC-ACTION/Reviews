@@ -1,9 +1,9 @@
 const express = require('express');
-const { getReviews } = require('../../database/methods/reviews.js');
-const { getReviewSummary } = require('../../database/methods/reviewsummary.js');
+const { getReviews } = require('../../database/postgres/methods/reviews.js');
+const { getReviewSummary } = require('../../database/postgres/methods/reviewsummary.js');
 const { addReview } = require('../../database/methods/reviews.js');
 const { queryReviewRating } = require('../middleware/queryParams.js');
-const { updateReview } = require('../../database/methods/update/reviews.js');
+const { updateReview } = require('../../database/postgres/methods/update/reviews.js');
 const { deleteReview } = require('../../database/methods/delete/reviews.js');
 const { checkRequestBody } = require('../middleware/checkRequestBody.js');
 const { getLastReviewId } = require('../../database/methods/reviews.js');
@@ -32,7 +32,7 @@ router.route('/:product_id/summary')
   .get(async (req, res) => {
     try {
       const reviewSummary = await getReviewSummary(req.options.product_id);
-      if (reviewSummary.length > 0) res.json(reviewSummary);
+      if (reviewSummary.rows.length > 0) res.json(reviewSummary.rows);
       else res.status(404).send('Review Summary Not Found.');
     } catch {
       res.status(500).send('Internal Server Error.');
@@ -48,8 +48,8 @@ router.route('/:product_id')
       }
     } else req.query.limit = 0;
     try {
-      const reviews = await getReviews(req.options, Number(req.query.limit));
-      if (reviews.length > 0) res.json(reviews);
+      const reviews = await getReviews(req.options.product_id, Number(req.query.limit));
+      if (reviews.rows.length > 0) res.json(reviews.rows);
       else res.status(404).send('Reviews Not Found.');
     } catch {
       res.status(500).send('Internal Server Error.');
@@ -59,10 +59,10 @@ router.route('/:product_id')
 router.route('/update')
   .patch(async (req, res) => {
     try {
-      let options = {review_id: req.body.review_id};
-      await updateReview(options, req.body);
+      await updateReview(req.body);
       res.sendStatus(200);
-    } catch {
+    } catch (err){
+      console.log(err);
       res.status(500).send('Internal Server Error.');
     }
   });
