@@ -7,6 +7,20 @@ const updateRating = async (ratingData, newRating) => {
     return updatedRating;
 };
 
+const incrementRating = async (productId, reviewRating) => {
+    let newRating = await client.query(`UPDATE review_summaries SET rating_${reviewRating} = rating_${reviewRating} + 1, total_reviews = total_reviews + 1 WHERE product_id = ${productId}`);
+
+    return newRating
+};
+
+const decrementRating = async (productId, reviewRating) => {
+    let decrementedRating = await client.query(`UPDATE review_summaries SET rating_${reviewRating} = rating_${reviewRating} - 1, total_reviews = total_reviews - 1 WHERE product_id = ${productId}`);
+
+    return decrementedRating;
+};
+
 module.exports = {
-    updateRating
+    updateRating,
+    incrementRating,
+    decrementRating
 };
