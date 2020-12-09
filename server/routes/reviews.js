@@ -1,12 +1,11 @@
 const express = require('express');
 const { getReviews } = require('../../database/postgres/methods/reviews.js');
 const { getReviewSummary } = require('../../database/postgres/methods/reviewsummary.js');
-const { addReview } = require('../../database/methods/reviews.js');
+const { addReview } = require('../../database/postgres/methods/reviews.js');
 const { queryReviewRating } = require('../middleware/queryParams.js');
 const { updateReview } = require('../../database/postgres/methods/update/reviews.js');
-const { deleteReview } = require('../../database/methods/delete/reviews.js');
+const { deleteReview } = require('../../database/postgres/methods/delete/reviews.js');
 const { checkRequestBody } = require('../middleware/checkRequestBody.js');
-const { getLastReviewId } = require('../../database/methods/reviews.js');
 
 const router = express.Router();
 
@@ -73,8 +72,8 @@ router.route('/add-review')
       checkRequestBody(req.body);
       addReview(req.body);
       res.sendStatus(200);
-    } catch {
-      console.log('there')
+    } catch (err) {
+      console.log(err)
       res.status(500).send('Internal Server Error.');
     }
   });
@@ -82,9 +81,7 @@ router.route('/add-review')
 router.route('/delete')
   .delete(async (req, res) => {
     try {
-      let lastId = await getLastReviewId();
       await deleteReview(req.body.review_id)
-      await updateReview({review_id: lastId[0].review_id}, {review_id: req.body.review_id})
       res.sendStatus(200); 
     } catch(err) {
       console.error(err)
