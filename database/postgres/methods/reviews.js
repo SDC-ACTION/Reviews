@@ -9,11 +9,7 @@ const addReview = async (reviewData) => {
     return newReview
 };
 
-const getReviews = async (productId) => {
-    let reviews = await client.query(`SELECT * FROM reviews WHERE product_id = ${productId}`);
-
-    return reviews;
-};
+const getReviews = async (productId) => await client.query(`SELECT * FROM reviews WHERE product_id = ${productId}`);
 
 module.exports = {
     addReview,

@@ -33,7 +33,8 @@ router.route('/:product_id/summary')
       const reviewSummary = await getReviewSummary(req.options.product_id);
       if (reviewSummary.rows.length > 0) res.json(reviewSummary.rows);
       else res.status(404).send('Review Summary Not Found.');
-    } catch {
+    } catch (err){
+      console.error(err);
       res.status(500).send('Internal Server Error.');
     }
   });
@@ -50,7 +51,8 @@ router.route('/:product_id')
       const reviews = await getReviews(req.options.product_id, Number(req.query.limit));
       if (reviews.rows.length > 0) res.json(reviews.rows);
       else res.status(404).send('Reviews Not Found.');
-    } catch {
+    } catch (err) {
+      console.error(err);
       res.status(500).send('Internal Server Error.');
     }
   });
@@ -61,7 +63,7 @@ router.route('/update')
       await updateReview(req.body);
       res.sendStatus(200);
     } catch (err){
-      console.log(err);
+      console.error(err);
       res.status(500).send('Internal Server Error.');
     }
   });
@@ -73,7 +75,7 @@ router.route('/add-review')
       addReview(req.body);
       res.sendStatus(200);
     } catch (err) {
-      console.log(err)
+      console.error(err);
       res.status(500).send('Internal Server Error.');
     }
   });
@@ -84,7 +86,7 @@ router.route('/delete')
       await deleteReview(req.body.review_id)
       res.sendStatus(200); 
     } catch(err) {
-      console.error(err)
+      console.error(err);
       res.status(500).send('Internal Server Error.');
     }
   });
