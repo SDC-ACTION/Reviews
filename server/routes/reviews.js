@@ -6,6 +6,7 @@ const { queryReviewRating } = require('../middleware/queryParams.js');
 const { updateReview } = require('../../database/postgres/methods/update/reviews.js');
 const { deleteReview } = require('../../database/postgres/methods/delete/reviews.js');
 const { checkRequestBody } = require('../middleware/checkRequestBody.js');
+const { generateSummary } = require('../middleware/generateSummary.js');
 
 const router = express.Router();
 
@@ -49,7 +50,9 @@ router.route('/:product_id')
     } else req.query.limit = 0;
     try {
       const reviews = await getReviews(req.options.product_id, Number(req.query.limit));
-      if (reviews.rows.length > 0) res.json(reviews.rows);
+      const summary = generateSummary(reviews.rows);
+      const productReview = { reviews: reviews.rows, summary: summary};
+      if (reviews.rows.length > 0) res.json(productReview);
       else res.status(404).send('Reviews Not Found.');
     } catch (err) {
       console.error(err);
@@ -84,7 +87,7 @@ router.route('/delete')
   .delete(async (req, res) => {
     try {
       await deleteReview(req.body.review_id)
-      res.sendStatus(200); 
+      res.sendStatus(200);
     } catch(err) {
       console.error(err);
       res.status(500).send('Internal Server Error.');
