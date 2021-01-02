@@ -7,7 +7,6 @@ const checkCache = (req, res, next) => {
             console.log('Error getting cached data: ', err);
         }
         else if (data){
-            console.log('cached data');
             res.json(data);
         }
         else {
