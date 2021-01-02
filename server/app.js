@@ -1,4 +1,5 @@
 const express = require('express');
+const { cache } = require('./middleware/cache.js');
 const path = require('path');
 
 const app = express();
@@ -12,6 +13,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use('/', express.static(path.join(__dirname, '../public')));
+app.use('/api/reviews/:product_id', cache);
 app.use('/api/reviews', require('./routes/reviews.js'));
 
 app.get('*', (req, res) => {
