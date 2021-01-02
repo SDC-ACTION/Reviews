@@ -30,3 +30,6 @@ globalConfig.json
 
 # JUnit
 artifacts/
+
+# Config files
+newrelic.js
