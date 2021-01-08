@@ -1,3 +1,4 @@
+require('newrelic');
 require('../database/postgres');
 const app = require('./app.js');
 
