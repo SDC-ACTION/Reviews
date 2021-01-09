@@ -22,8 +22,6 @@ const saveToCache = (req, res, next) => {
                     console.log('Error caching data: ', err)
                 }
             })
-        } else{
-            res.status(500);
         }
         oldEnd.apply(res, arguments);
     };
