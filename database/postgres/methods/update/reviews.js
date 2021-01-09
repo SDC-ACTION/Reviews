@@ -5,7 +5,7 @@ const updateReview = async (reviewData) => {
     let newValues = '';
     let newUsername = ` username = '${reviewData.username}' `;
     let newHeading = ` review_heading = '${reviewData.review_heading}' `;
-    let newText = ` review_text = '${reviewData.review_text}' `;
+    let newText = ` review_text = '(edited) ${reviewData.review_text}' `;
     let newRating = ` review_rating = ${reviewData.review_rating} `;
 
     if (reviewData.username) {
