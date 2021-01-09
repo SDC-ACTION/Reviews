@@ -1,13 +1,13 @@
 const client = require('../../index.js');
-const { updateRating } = require('./reviewsummary.js');
+// const { updateRating } = require('./reviewsummary.js');
 
 const updateReview = async (reviewData) => {
     let newValues = '';
     let newUsername = ` username = '${reviewData.username}' `;
     let newHeading = ` review_heading = '${reviewData.review_heading}' `;
-    let newText = ` review_text = '${reviewData.review_text}' `;
+    let newText = ` review_text = '(edited) ${reviewData.review_text}' `;
     let newRating = ` review_rating = ${reviewData.review_rating} `;
- 
+
     if (reviewData.username) {
         newValues += newUsername;
     }
@@ -33,13 +33,8 @@ const updateReview = async (reviewData) => {
             newValues += newRating;
         }
     }
- 
-    let originalData = await client.query(`SELECT product_id, review_rating FROM reviews WHERE review_id = ${reviewData.review_id}`);
-    let updatedReview = await client.query(`UPDATE reviews SET ${newValues} WHERE review_id = ${reviewData.review_id}`);
 
-    if (originalData.rows[0].review_rating !== reviewData.review_rating) {
-        await updateRating(originalData.rows[0], reviewData.review_rating);
-    }
+    let updatedReview = await client.query(`UPDATE reviews SET ${newValues} WHERE review_id = ${reviewData.review_id}`);
 
     return updatedReview;
 };
