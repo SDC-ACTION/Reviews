@@ -1,6 +1,6 @@
 const generateSummary = (reviews) => {
     let summary;
-    if (reviews[0].product_id) {
+    if (reviews[0]) {
         summary = {product_id: reviews[0].product_id, rating_1: 0, rating_2: 0, rating_3: 0, rating_4: 0, rating_5: 0, total_reviews: 0};
 
         for (let i = 0; i < reviews.length; i++) {
