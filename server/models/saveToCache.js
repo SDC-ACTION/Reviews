@@ -15,7 +15,7 @@ const saveToCache = (req, res, next) => {
         if (chunk){
             chunks.push(chunk);
         }
-        if (typeof chunks[0] !== 'string' && chunks[0].toString('utf8') !== 'OK' && res.status == 200){
+        if (typeof chunks[0] !== 'string' && chunks[0].toString('utf8') !== 'OK' && res.statusCode !== 404 && res.statusCode !== 500){
             let body = JSON.parse(Buffer.concat(chunks));
             memcached.set(req.params.product_id, body, 3600, (err) => {
                 if (err){
