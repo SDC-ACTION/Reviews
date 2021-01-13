@@ -8,7 +8,6 @@ const checkCache = (req, res, next) => {
         }
         else if (data){
             res.json(data);
-            next();
         }
         else {
             parseResBody(req, res, next);

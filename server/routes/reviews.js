@@ -72,10 +72,10 @@ router.route('/update')
   });
 
 router.route('/add-review')
-  .post((req, res) => {
+  .post(async (req, res) => {
     try {
       checkRequestBody(req.body);
-      let newReview = addReview(req.body);
+      let newReview = await addReview(req.body);
       res.json(newReview);
     } catch (err) {
       console.error(err);
