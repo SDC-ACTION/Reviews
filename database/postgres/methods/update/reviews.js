@@ -34,7 +34,7 @@ const updateReview = async (reviewData) => {
         }
     }
 
-    let updatedReview = await client.query(`UPDATE reviews SET ${newValues} WHERE review_id = ${reviewData.review_id}`);
+    let updatedReview = await client.query(`UPDATE reviews SET ${newValues} WHERE review_id = ${reviewData.review_id} RETURNING product_id`);
 
     return updatedReview;
 };
