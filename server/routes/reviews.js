@@ -53,7 +53,28 @@ router.route('/:product_id')
       const summary = generateSummary(reviews.rows);
       const productReview = { reviews: reviews.rows, summary: summary};
       if (reviews.rows.length > 0) res.json(productReview);
-      else res.status(404).send('Reviews Not Found.');
+      else {
+        const noReviews = [
+          {
+            product_id: req.options.product_id,
+            username: '',
+            review_heading: '',
+            review_text: '',
+            review_rating: 0,
+            created_at: '2021-12-31T23:59:59.000Z'
+          }
+        ];
+        const noSummary = {
+          rating_1: 0,
+          rating_2: 0,
+          rating_3: 0,
+          rating_4: 0,
+          rating_5: 0,
+          total_reviews: 1
+        };
+        const noReview = {reviews: noReviews, summary: noSummary};
+        res.send(noReview)
+      };
     } catch (err) {
       console.error(err);
       res.status(500).send('Internal Server Error.');
