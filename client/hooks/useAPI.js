@@ -4,7 +4,6 @@ import sampleReviewSummary from '../sampleReviewSummary.json';
 
 const useAPI = (url) => {
   const [apiData, setApiData] = useState(null);
-
   useEffect(() => {
     fetch(url)
       .then((res) => {

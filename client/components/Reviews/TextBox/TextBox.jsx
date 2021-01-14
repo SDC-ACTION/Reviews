@@ -8,6 +8,7 @@ const StyledTextWrapper = styled.div`
 `;
 
 const TextBox = ({ review_text }) => {
+
   const [display, setDisplay] = useState({
     shortDisplay: null,
     longDisplay: 'none',

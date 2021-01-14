@@ -35,7 +35,7 @@ const ReviewGraph = ({ reviewSummary }) => {
     rating_2,
     rating_1,
     total_reviews,
-  } = reviewSummary[0];
+  } = reviewSummary;
 
   return (
     <StyledReviewGraphContainer>

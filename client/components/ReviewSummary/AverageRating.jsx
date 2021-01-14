@@ -33,14 +33,14 @@ const StyledTotalReviews = styled.p`
 
 const AverageRating = ({ reviewSummary }) => {
   const averageRating = (
-    reviewSummary[0].rating_1 * 1
-    + reviewSummary[0].rating_2 * 2
-    + reviewSummary[0].rating_3 * 3
-    + reviewSummary[0].rating_4 * 4
-    + reviewSummary[0].rating_5 * 5) / reviewSummary[0].total_reviews;
+    reviewSummary.rating_1 * 1
+    + reviewSummary.rating_2 * 2
+    + reviewSummary.rating_3 * 3
+    + reviewSummary.rating_4 * 4
+    + reviewSummary.rating_5 * 5) / reviewSummary.total_reviews;
 
-  const reviewWord = (reviewSummary[0].total_reviews === 1) ? 'review' : 'reviews';
-  const totalReviews = reviewSummary[0].total_reviews.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const reviewWord = (reviewSummary.total_reviews === 1) ? 'review' : 'reviews';
+  const totalReviews = reviewSummary.total_reviews.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
   return (
     <StyledAverageRatingContainer>

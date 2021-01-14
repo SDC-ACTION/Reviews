@@ -12,16 +12,15 @@ const StyledReviewWrapper = styled.div`
   margin: 34px 0px 0px 0px;
 `;
 
-const Reviews = ({ product_id }) => {
-  const apiData = useAPI(`${process.env.API_URL}/${product_id}?limit=1`);
-  if (apiData) {
+const Reviews = ({ review }) => {
+  if (review) {
     const {
       created_at,
       review_heading,
       review_rating,
       review_text,
       username,
-    } = apiData[0];
+    } = review[0];
 
     return (
       <StyledReviewWrapper>

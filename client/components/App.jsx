@@ -15,15 +15,15 @@ const StyledWrapper = styled.div`
 `;
 
 const App = ({ match }) => {
-  const reviewSummaryData = useAPI(`${process.env.API_URL}/${match.params.id}/summary`);
-  if (reviewSummaryData) {
+  const reviewData = useAPI(`${process.env.API_URL}/${match.params.id}?limit=1`);
+  if (reviewData) {
     return (
       <StyledWrapper>
         <Title />
-        <AverageRating reviewSummary={reviewSummaryData} />
-        <ReviewGraph reviewSummary={reviewSummaryData} />
+        <AverageRating reviewSummary={reviewData.summary} />
+        <ReviewGraph reviewSummary={reviewData.summary} />
         <SearchReviews />
-        <Reviews product_id={match.params.id} />
+        <Reviews review={reviewData.reviews} />
       </StyledWrapper>
     );
   }

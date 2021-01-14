@@ -4,7 +4,7 @@ const client = new Client({
     database: 'reviews',
     host: '18.144.15.249',
     user: 'postgres',
-    password: ''
+    password: 'reviews123'
 });
 
 client.connect()
