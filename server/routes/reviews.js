@@ -63,8 +63,8 @@ router.route('/:product_id')
 router.route('/update')
   .patch(async (req, res) => {
     try {
-      await updateReview(req.body);
-      res.sendStatus(200);
+      let update = await updateReview(req.body);
+      res.json(update);
     } catch (err){
       console.error(err);
       res.status(500).send('Internal Server Error.');
@@ -72,11 +72,11 @@ router.route('/update')
   });
 
 router.route('/add-review')
-  .post((req, res) => {
+  .post(async (req, res) => {
     try {
       checkRequestBody(req.body);
-      addReview(req.body);
-      res.sendStatus(200);
+      let newReview = await addReview(req.body);
+      res.json(newReview);
     } catch (err) {
       console.error(err);
       res.status(500).send('Internal Server Error.');
@@ -86,8 +86,8 @@ router.route('/add-review')
 router.route('/delete')
   .delete(async (req, res) => {
     try {
-      await deleteReview(req.body.review_id)
-      res.sendStatus(200);
+      let deleted = await deleteReview(req.body.review_id);
+      res.json(deleted);
     } catch(err) {
       console.error(err);
       res.status(500).send('Internal Server Error.');
