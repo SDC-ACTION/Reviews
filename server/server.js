@@ -10,9 +10,9 @@ app.listen(PORT, () => {
   console.log(`Environment: ${process.env.NODE_ENV}`);
 });
 
-if (isProd) {
-  setTimeout(() => {
-    // eslint-disable-next-line global-require
-    require('../database/seed/seedRandomData.js');
-  }, 5000);
-}
+// if (isProd) {
+//   setTimeout(() => {
+//     // eslint-disable-next-line global-require
+//     require('../database/seed/seedRandomData.js');
+//   }, 5000);
+// }
