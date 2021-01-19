@@ -85,7 +85,7 @@ router.route('/update')
   .patch(async (req, res) => {
     try {
       let update = await updateReview(req.body);
-      res.json(update);
+      res.status(204).json(update);
     } catch (err){
       console.error(err);
       res.status(500).send('Internal Server Error.');
@@ -97,7 +97,7 @@ router.route('/add-review')
     try {
       checkRequestBody(req.body);
       let newReview = await addReview(req.body);
-      res.json(newReview);
+      res.status(201).json(newReview);
     } catch (err) {
       console.error(err);
       res.status(500).send('Internal Server Error.');
@@ -108,7 +108,7 @@ router.route('/delete')
   .delete(async (req, res) => {
     try {
       let deleted = await deleteReview(req.body.review_id);
-      res.json(deleted);
+      res.status(204).json(deleted);
     } catch(err) {
       console.error(err);
       res.status(500).send('Internal Server Error.');
