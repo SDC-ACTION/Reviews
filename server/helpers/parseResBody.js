@@ -1,4 +1,3 @@
-const memcached = require('../models/index.js');
 const { saveToCache } = require('../models/saveToCache.js');
 const { deleteFromCache } = require('../models/deleteFromCache.js');
 

@@ -6,7 +6,7 @@
   "license": "",
   "scripts": {
     "build": "webpack --env.API_URL=http://3.101.124.159/api/reviews --mode=production",
-    "build:dev": "webpack --env.API_URL=http://localhost:3001/api/reviews --mode=development",
+    "build:dev": "webpack --env.API_URL=http://localhost:3000/api/reviews --mode=development",
     "build:dev:watch": "webpack --env.API_URL=http://localhost:3001/api/reviews --mode=development --watch",
     "start": "NODE_ENV=production node server/server.js",
     "start:dev": "node server/server.js",
